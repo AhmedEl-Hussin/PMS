@@ -11,10 +11,10 @@ export default function AuthContextProvider(props){
 
     
     // ******************* to decoded token *******************
-    const [adminData , setAdminData] = useState(()=> localStorage.getItem("adminToken"));
+    const [adminData , setAdminData] = useState(()=> localStorage.getItem("userToken"));
 
     const saveAdminData = ()=> {
-        const encodedToken = localStorage.getItem("adminToken");
+        const encodedToken = localStorage.getItem("userToken");
         try{
             const decodedToken = jwtDecode(encodedToken);
             setAdminData(decodedToken)
@@ -24,7 +24,7 @@ export default function AuthContextProvider(props){
     }
     
     useEffect( ()=> {
-        if (localStorage.getItem("adminToken")) {
+        if (localStorage.getItem("userToken")) {
             saveAdminData()
         }
     } , [])
