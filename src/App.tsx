@@ -21,9 +21,9 @@ import ProtectedRouter from './Shared/ProtectedRouter/ProtectedRouter'
 import { AuthContext } from './Context/AuthContext'
 import { useContext } from 'react'
 
-function App() {
+function App() { 
 
-  let {adminData , saveAdminData} = useContext(AuthContext)
+  let {adminData , saveAdminData } = useContext(AuthContext)
 
   const routes = createBrowserRouter([
     {
