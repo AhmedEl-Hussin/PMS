@@ -68,7 +68,7 @@ return (<>
             {errors.email && errors.email.type === "pattern" && (
               <span className="text-danger mt-4">invaild email</span>
             )}
-          </div>
+          </div> 
 
           <div className="form-group text-center mt-4">
             <button className=" text-white">
