@@ -15,8 +15,6 @@ import RequsetResetPass from './Components/RequsetResetPass/RequsetResetPass'
 import ChangePassword from './Components/ChangePassword/ChangePassword'
 import VerfiyUser from './Components/VerfiyUser/VerfiyUser'
 import { ToastContainer } from 'react-toastify'
-// import { useContext, useEffect, useState } from 'react'
-// import { jwtDecode } from 'jwt-decode'
 import ProtectedRouter from './Shared/ProtectedRouter/ProtectedRouter'
 import { AuthContext } from './Context/AuthContext'
 import { useContext } from 'react'
@@ -29,8 +27,8 @@ function App() {
     {
       path : "dashboard",
       element : ( <ProtectedRouter adminData = {adminData}>
-                  <MasterLayout adminData = {adminData} />
-                </ProtectedRouter>
+                    <MasterLayout adminData = {adminData} />
+                  </ProtectedRouter>
                 ),
       errorElement : <NotFound/>,
       children : [
@@ -49,8 +47,8 @@ function App() {
         { index: true, element: <Login saveAdminData = {saveAdminData}/> },
         { path : "login", element: <Login saveAdminData = {saveAdminData}/> },
         { path : "rigester", element: <Rigester/> },
-        { path : "restPassword", element: <RestPassword/> }, 
         { path : "requsetRestPass", element: <RequsetResetPass/> },
+        { path : "restPassword", element: <RestPassword/> }, 
         { path : "changePassword", element: <ChangePassword/> },
         { path : "verify", element: <VerfiyUser/> },
       ]

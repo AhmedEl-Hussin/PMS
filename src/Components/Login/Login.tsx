@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/PMS 3.png";
 import axios from "axios";
 import { useContext, useState } from "react";
@@ -27,7 +27,7 @@ export default function Login({saveAdminData}) {
     axios.post(`${baseUrl}/Users/Login` , data)
 
     .then((response)=> {
-      localStorage.setItem('adminToken', response.data.token);
+      localStorage.setItem('userToken', response.data.token);
       saveAdminData()
       navigate("/dashboard")
       toast.success("Successfully")
@@ -98,7 +98,7 @@ export default function Login({saveAdminData}) {
                 </div>
 
                 <div className='rigester mt-3 text-end'>
-                  <a href="/restPassword">Forget Password</a>
+                  <Link to = "/requsetRestPass">Forget Password</Link>
                 </div>
 
                 <div className='form-group text-center mt-4'>
