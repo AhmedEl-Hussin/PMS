@@ -1,91 +1,43 @@
 import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../Context/AuthContext";
+import { useState } from "react";
 
 
 
 export default function SideBar() {
 
-  const navigate = useNavigate()
   const [isCollapsed , setIsCollapsed] = useState(false);
-  let {userRole} : any = useContext(AuthContext)
 
   const handelToggle = ()=>{
     setIsCollapsed(!isCollapsed);
   }
 
-  // ******************* to log out ********************
+  const navigate = useNavigate()
+
   const logout = ()=>{
-    localStorage.removeItem("userToken");
+    localStorage.removeItem("adminToken");
     navigate("/login")
   }
-
 
   return (
     
     <>
-      <div className="sideBar-container overflow-visible ">
+    <div className="sideBar-container">
 
-        <Sidebar collapsed={isCollapsed}>
+      <Sidebar  collapsed={isCollapsed}>
+        <Menu >
+          <MenuItem onClick={handelToggle} icon={ <i className="fa-solid fa-users"></i>}> </MenuItem>
+          <MenuItem className="icons" icon={<i className="fa fa-home"></i>} component={<Link to="/dashboard" />}> Home</MenuItem>
+          <MenuItem icon={<i className="fa-solid fa-users"></i>} component={<Link to="/dashboard/users" />}> Users</MenuItem>
+          <MenuItem icon={<i className="fa-solid fa-table"></i>} component={<Link to="/dashboard/projects" />}> Projects</MenuItem>
+          <MenuItem icon={<i className="fa-regular fa-calendar-days"></i>} component={<Link to="/dashboard/tasks" />}> Tasks</MenuItem>
+          <MenuItem icon={<i className="fa-solid fa-unlock"></i>} component={<Link to="/changePassword" />}> Change Password</MenuItem>
+          <MenuItem onClick={logout} icon={<i className="fa-solid fa-right-from-bracket"></i>}> Logout</MenuItem>
+        </Menu>
+      </Sidebar>
+      {/* <button onClick={logout} className="btn btn-success">Logout</button> */}
 
-          <Menu >
-            <MenuItem  
-              className="togel"
-              onClick={handelToggle} 
-              icon={ isCollapsed ? <i className="fa-solid icon-tolgle-right fa-chevron-right"></i> 
-              : <i className="fa-solid icon-tolgle-left fa-chevron-left"></i> }> 
-            </MenuItem>
-
-            <MenuItem  
-              className="icons iconHover" 
-              icon={<i className="fa fa-home"></i>} 
-              component={<Link to="/dashboard" />}> 
-              Home
-            </MenuItem> 
-
-            {userRole == "Manager" ? 
-            <MenuItem 
-              className="iconHover"
-              icon={<i className="fa-solid fa-users"></i>} 
-              component={<Link to="/dashboard/users" />}> 
-              Users
-            </MenuItem>: "" } 
-
-            <MenuItem 
-              className="iconHover"
-              icon={ <i className="fa-solid fa-diagram-project"></i> } 
-              component={<Link to="/dashboard/projects" />}> 
-              Projects
-            </MenuItem>
-
-            <MenuItem 
-              className="iconHover"
-              icon={<i className="fa-solid fa-tasks"></i>} 
-              component={<Link to="/dashboard/tasks" />}> 
-              Tasks
-            </MenuItem>
-
-            <MenuItem 
-              className="iconHover"
-              icon={<i className="fa-solid fa-unlock"></i>} 
-              component={<Link to="/changePassword" />}> 
-              Change Password
-            </MenuItem>
-
-            <MenuItem 
-              className="iconHover"
-              onClick={logout} 
-              icon={<i className="fa-solid fa-right-from-bracket"></i>}> 
-              Logout
-            </MenuItem>
-
-          </Menu> 
-
-        </Sidebar>
-
-
-      </div>
+    </div>
     </>
   )
 }

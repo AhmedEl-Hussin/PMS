@@ -18,7 +18,6 @@ import { ToastContainer } from 'react-toastify'
 import ProtectedRouter from './Shared/ProtectedRouter/ProtectedRouter'
 import { AuthContext } from './Context/AuthContext'
 import { useContext } from 'react'
-import AddNewProject from './Components/AddNewProject/AddNewProject'
 
 function App() {
 
@@ -37,7 +36,6 @@ function App() {
         { path : "projects", element: <Projects/> },
         { path : "users", element: <Users/> },
         { path : "tasks", element: <Tasks/> },
-        { path : "addProject", element: <AddNewProject/> },
       ]
 
     },
