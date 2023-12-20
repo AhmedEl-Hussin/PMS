@@ -9,6 +9,10 @@ export default function AuthContextProvider(props){
     // ******************* to baseUrl for apis *******************
     const baseUrl = `http://upskilling-egypt.com:3003/api/v1`;
 
+    // ******************* to header *******************
+    const requstHeaders = { 
+        Authorization : `Bearer ${localStorage.getItem("userToken")}`,
+    }
     
     // ******************* to decoded token *******************
     const [adminData , setAdminData] = useState(()=> localStorage.getItem("userToken"));
@@ -29,7 +33,7 @@ export default function AuthContextProvider(props){
         }
     } , [])
 
-    return (  <AuthContext.Provider value= {{adminData , saveAdminData  , baseUrl }} > 
+    return (  <AuthContext.Provider value= {{adminData , saveAdminData , requstHeaders , baseUrl }} > 
                 {props.children} 
             </AuthContext.Provider>)
 
