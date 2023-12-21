@@ -13,6 +13,10 @@
     overflow: hidden;
 }
 
+.bgOutlet{
+    background-color: rgb(245, 245, 245);
+}
+
 .caption{
     width: 50%;
     border-radius: 20px;
@@ -80,21 +84,20 @@
 }
 
 /* **************** style for sidbar *************** */
+
 .sideBar-container .ps-sidebar-container{
     background-color: #0E382F;
     color: white;
     height: 100vh;
+    position: relative;
 }
 
 .sideBar-container .ps-sidebar-root{
-    width: 162px;
-    min-width: 162px;
+    width: 10rem;
+    min-width: 10rem;
     border: none;
 }
 
-/* .sideBar-container .ps-sidebar-container .ps-menu-root{
-    margin-top: 25px;
-} */
 
 .sideBar-container .ps-sidebar-container .ps-menu-button .ps-menu-label{
     font-size: 11px;
@@ -102,20 +105,153 @@
 
 
 .sideBar-container .ps-sidebar-container img{
-    width: 100px;
-    margin-left: 10px;
+    width: 140px;
+    margin-left: 140px;
 } 
 
 .sideBar-container .ps-sidebar-container .ps-menu-button:hover{
-    background-color: #03b157;
+    background-color: transparent;
+}
+
+.sideBar-container .ps-sidebar-container .iconHover:hover{
+    background-color: rgba(242, 147, 15, 0.3) ;
+    width: 145px;
+    margin: auto;
+    border-radius: 10px;
+    color: orange;
+}
+
+.sideBar-container .ps-sidebar-container .togel:hover{
+    background-color: transparent ;
     color: white;
 }
 
-.bg-sideBar{
-    background-color: #0E382F;
-    border-top-right-radius: 70px;
+.sideBar-container .ps-sidebar-container .icon-tolgle-right{
+    background-color: orange;
+    padding: 10px 5px;
+    font-size: 15px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    /* margin-left: 100px; */
+    position: absolute;
+    width: 20px;
+    top: 10px;
+    left: 60px ;
 }
-/* 
-.icons{
-    margin-top: 50px;
-} */
+
+.sideBar-container .ps-sidebar-container .icon-tolgle-left{
+    background-color: orange;
+    padding: 10px 5px;
+    font-size: 15px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    position: absolute;
+    width: 20px;
+    top: 10px;
+    left: 140px ;
+}
+
+/* **************** style for navbar *************** */
+.navbarCaption{
+    border-bottom: 2px solid rgb(235, 235, 235);
+}
+
+.navbarImg{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+.navEmail{
+    font-size: 13px;
+}
+
+.navlogo{
+    width: 130px;
+    height: 40px;
+}
+
+/* **************** style for project *************** */
+
+.shredBtn{
+    color: white;
+    background-color: orange;
+    border-radius: 20px;
+    padding: 8px 30px;
+    transition: all 0.4s;
+    border: none;
+}
+
+.shredBtn:hover{
+    color: white;
+    background-color: #466a62;
+}
+
+.theadTable{
+    background-color: red;
+}
+
+.navigate{
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.theadTable , .status{
+    background-color: #466a62 !important;
+    color: white !important;
+}
+
+.status span{
+    font-size: 13px;
+}
+
+.loading i {
+    font-size: 60px;
+    padding: 100px 0;
+}
+
+
+
+
+
+
+
+
+
+/* **************** medai query to navbar ***************** */
+
+@media screen and (max-width:850px) {
+
+    .navbarCaption{
+        width: 90%;
+    }
+}
+
+@media screen and (max-width:750px) {
+
+    .navbarCaption{
+        width: 80%;
+    }
+
+    .navCaption span{
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width:450px) {
+
+    .navbarCaption{
+        justify-content: space-between;
+    }
+
+    .navbarCaption .navbarImg{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
+    .navCaption .navEmail{
+        font-size: 8px;
+    }
+}

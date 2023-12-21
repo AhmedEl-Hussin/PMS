@@ -18,6 +18,7 @@ import { ToastContainer } from 'react-toastify'
 import ProtectedRouter from './Shared/ProtectedRouter/ProtectedRouter'
 import { AuthContext } from './Context/AuthContext'
 import { useContext } from 'react'
+import AddNewProject from './Components/AddNewProject/AddNewProject'
 
 function App() { 
 
@@ -34,6 +35,7 @@ function App() {
       children : [
         { index: true, element: <Home/> },
         { path : "projects", element: <Projects/> },
+        { path : "projects/addProject", element: <AddNewProject/> },
         { path : "users", element: <Users/> },
         { path : "tasks", element: <Tasks/> },
       ]
