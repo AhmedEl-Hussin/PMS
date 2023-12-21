@@ -24,13 +24,13 @@ export default function Projects() {
         headers: requstHeaders ,
       })
       .then((response)=>{
-        // console.log(response.data);
-        setProjectList(response?.data)
-        setIsLoding(false)
+        // console.log(response.data.data);
+        setProjectList(response?.data?.data)
       
       }).catch((error)=>{
-        // error(error?.response?.data?.message || "Not Found Categorys")
-        console.log(error.response.data.message);
+        console.log(error?.response?.data?.message);
+      })
+      .finally(()=> {
         setIsLoding(false)
       })
     }
@@ -58,6 +58,7 @@ export default function Projects() {
 
       {/* **************** to display table ****************** */}
       {!isLoding ? <div className='table-responsive px-4'>
+
         {projectList.length > 0 ? <table className="table table-striped mt-4">
         
         <thead className=''>
@@ -91,8 +92,6 @@ export default function Projects() {
           ))}
         </tbody> 
       </table>  : <NoData/>}
-
-        
 
       </div> : <div className='text-center loading mb-5 mt-4 '> <i className="fa-solid text-success fa-spin fa-spinner"></i> </div>}
       

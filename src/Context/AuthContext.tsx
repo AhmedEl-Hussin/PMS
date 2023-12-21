@@ -16,11 +16,13 @@ export default function AuthContextProvider(props){
     
     // ******************* to decoded token *******************
     const [adminData , setAdminData] = useState(()=> localStorage.getItem("userToken"));
+    const [userRole , setUserRole] = useState(null)
 
     const saveAdminData = ()=> {
         const encodedToken = localStorage.getItem("userToken");
         try{
             const decodedToken = jwtDecode(encodedToken);
+            setUserRole(decodedToken.userGroup);            
             setAdminData(decodedToken)
         }catch (error){
             setAdminData(null)
@@ -33,7 +35,7 @@ export default function AuthContextProvider(props){
         }
     } , [])
 
-    return (  <AuthContext.Provider value= {{adminData , saveAdminData , requstHeaders , baseUrl }} > 
+    return (  <AuthContext.Provider value= {{adminData , saveAdminData , userRole , requstHeaders , baseUrl }} > 
                 {props.children} 
             </AuthContext.Provider>)
 

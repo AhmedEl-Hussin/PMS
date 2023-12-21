@@ -29,15 +29,16 @@ export default function AddNewProject() {
             headers : requstHeaders,
         })
         .then((response)=> {
-            // console.log(response);
-            setIsLoding(false);
+            // console.log(response.data);
             navigate("/dashboard/projects")
-            toast.success("Added Successfully")
+            toast.success( response?.data?.message || "Added Successfully")
         })
         .catch((error)=> {
             // console.log(error?.response?.data?.message);
-            toast.error(error?.response?.data?.message)
-            setIsLoding(false);
+            toast.error(error?.response?.data?.message || "Data of project invaild")
+        })
+        .finally(()=> {
+            setIsLoding(false)
         })
     }
 
