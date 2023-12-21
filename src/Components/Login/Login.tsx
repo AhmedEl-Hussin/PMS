@@ -30,12 +30,14 @@ export default function Login({saveAdminData}) {
       localStorage.setItem('userToken', response.data.token);
       saveAdminData()
       navigate("/dashboard")
-      toast.success("Successfully")
+      toast.success(response?.data?.message ||"Successfully")
     })
     .catch((error)=> {
       // console.log(error?.response?.data?.message);
-      toast.error(error?.response?.data?.message)
-      setIsLoding(false)
+      toast.error(error?.response?.data?.message || "Invaild Data")
+    })
+    .finally(()=> {
+      setIsLoding(false);
     })
   }
 
