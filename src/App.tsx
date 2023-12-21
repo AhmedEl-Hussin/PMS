@@ -35,9 +35,9 @@ function App() {
       children : [
         { index: true, element: <Home/> },
         { path : "projects", element: <Projects/> },
+        { path : "projects/addProject", element: <AddNewProject/> },
         { path : "users", element: <Users/> },
         { path : "tasks", element: <Tasks/> },
-        { path : "addProject", element: <AddNewProject/> },
       ]
 
     },

@@ -1,6 +1,6 @@
 
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
 import axios from "axios";
 import NoData from "../../Shared/NoData/NoData";
@@ -37,7 +37,7 @@ export default function Projects() {
 
     //**************** for navigate to add new project ****************** 
     const addNewProject = ()=> {
-      navigate("/dashboard/addProject")
+      navigate("/dashboard/projects/addProject")
     }
 
     useEffect( ()=> {
@@ -89,8 +89,6 @@ export default function Projects() {
           ))}
         </tbody> 
       </table>  : <NoData/>}
-
-        
 
       </div> : <div className='text-center loading mb-5 mt-4 '> <i className="fa-solid text-success fa-spin fa-spinner"></i> </div>}
       

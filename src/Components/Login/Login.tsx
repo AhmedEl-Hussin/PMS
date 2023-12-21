@@ -32,7 +32,7 @@ export default function Login({saveAdminData}) {
       toast.success(response?.data?.message ||"Successfully")
     })
     .catch((error)=> {
-      toast.error(error?.response?.data?.message || "Invaild Data")
+      toast.error(error?.response?.data?.message || "Something went Wrong")
     })
     .finally(()=> {
       setIsLoding(false);
