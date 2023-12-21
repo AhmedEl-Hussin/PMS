@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
 import axios from "axios";
 import NoData from "../../Shared/NoData/NoData";
+import { toast } from "react-toastify";
 
 
 export default function Projects() {
@@ -23,14 +24,14 @@ export default function Projects() {
         headers: requstHeaders ,
       })
       .then((response)=>{
-        console.log(response.data);
-        setProjectList(response?.data.data)
-        setIsLoding(false)
-      
+        setProjectList(response?.data?.data)
+
       }).catch((error)=>{
-        // error(error?.response?.data?.message || "Not Found Categorys")
-        console.log(error.response.data.message);
-        setIsLoding(false)
+        toast.error(error?.response?.data?.message || "Something went Wrong");
+
+      })
+      .finally(()=> {
+        setIsLoding(false);
       })
     }
 

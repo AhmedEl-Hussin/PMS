@@ -24,7 +24,6 @@ export default function AddNewProject() {
 
   // ****************** to add new project **********************
   const onSubmit = (data)=> {
-      // console.log(data);
       setIsLoding(true);
 
       axios.post(`${baseUrl}/Project` , data ,
@@ -32,13 +31,11 @@ export default function AddNewProject() {
           headers : requstHeaders,
       })
       .then((response)=> {
-          console.log(response);
           navigate("/dashboard/projects")
           toast.success( response?.data?.message || "Added Successfully")
       })
       .catch((error)=> {
-          console.log(error?.response?.data?.message);
-          toast.error(error?.response?.data?.message || "invalid Data")
+          toast.error(error?.response?.data?.message || "Data of project invaild")
       })
       .finally(()=> {
         setIsLoding(false);

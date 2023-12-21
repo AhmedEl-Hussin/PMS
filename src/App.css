@@ -93,8 +93,8 @@
 }
 
 .sideBar-container .ps-sidebar-root{
-    width: 160px;
-    min-width: 160px;
+    width: 10rem;
+    min-width: 10rem;
     border: none;
 }
 
@@ -178,7 +178,13 @@
     background-color: orange;
     border-radius: 20px;
     padding: 8px 30px;
+    transition: all 0.4s;
     border: none;
+}
+
+.shredBtn:hover{
+    color: white;
+    background-color: #466a62;
 }
 
 .theadTable{

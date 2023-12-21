@@ -21,7 +21,6 @@ export default function Login({saveAdminData}) {
 
   // ****************** to login **********************
   const onSubmit = (data)=> {
-    // console.log(data);
     setIsLoding(true)
 
     axios.post(`${baseUrl}/Users/Login` , data)
@@ -33,7 +32,6 @@ export default function Login({saveAdminData}) {
       toast.success(response?.data?.message ||"Successfully")
     })
     .catch((error)=> {
-      // console.log(error?.response?.data?.message);
       toast.error(error?.response?.data?.message || "Invaild Data")
     })
     .finally(()=> {
