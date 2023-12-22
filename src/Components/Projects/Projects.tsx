@@ -1,52 +1,188 @@
-
 import { useContext, useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
 import axios from "axios";
 import NoData from "../../Shared/NoData/NoData";
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
+import noData from "../../assets/images/noData.png"
+import { Modal } from "react-bootstrap";
+import { useForm } from "react-hook-form";
 
 
 export default function Projects() {
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState : { errors },
+  } = useForm();
 
   const navigate = useNavigate();
   const {baseUrl , requstHeaders} : any = useContext(AuthContext);
   const [projectList , setProjectList] = useState([]);
   const [isLoding , setIsLoding] =useState(false);
+  const [itemId , setItemId] = useState(0);
+  const [modelState, setModelState] = useState("colse");
+  const handleClose = () => setModelState("colse");
 
 
-    // *************** to get all projects *****************
-    const getCategoryList = ()=>{
+  // *************** to show delete model ***************
+  const showDeleteModel = (id)=>{
+    setItemId(id)
+    setModelState("delete-model");
+  }
 
-      setIsLoding(true)
-      axios.get(`${baseUrl}/Project/manager` , 
-      {
-        headers: requstHeaders ,
-      })
-      .then((response)=>{
-        setProjectList(response?.data?.data)
+  // *************** to show update model ***************
+  const showUpdateModel = (project)=>{
+    setItemId(project?.id);
+    setValue( "title" , project?.title);
+    setValue( "description" , project?.description);
+    setModelState("update-model");
+  }
 
-      }).catch((error)=>{
-        toast.error(error?.response?.data?.message || "Something went Wrong");
+  //*************** to delete project *****************
+  const deleteProject = ()=> {
+    setIsLoding(true);
+    
+    axios.delete(`${baseUrl}/Project/${itemId}` , 
+    {
+      headers : requstHeaders
+    })
+    .then((response)=>{
+      // console.log(response);
+      handleClose()
+      getAllProject()
+      toast.success("Project Deleted Successfuly")
+    
+    }).catch((error)=>{
+      // console.log(error.response.data.message);
+      toast.error(error?.response?.data?.message || "Project Not Deleted");
+    })
+    .finally(()=> {
+      setIsLoding(false);
+    })
+  }
 
-      })
-      .finally(()=> {
-        setIsLoding(false);
-      })
-    }
+  // *************** to update project *****************
+  const updateProject = (data)=> {
+    setIsLoding(true);
+    axios.put(`${baseUrl}/Project/${itemId}`, data , 
+    {
+      headers : requstHeaders
+    })
+    .then((response)=>{
+      handleClose()
+      getAllProject()
+      toast.success("Project Updated Successfuly")
+    
+    }).catch((error)=>{
+      toast.error(error?.response?.data?.message || "'Project Not Updated'")
+    })    
+    .finally(()=> {
+      setIsLoding(false);
+    })
+  }
 
-    //**************** for navigate to add new project ****************** 
-    const addNewProject = ()=> {
-      navigate("/dashboard/projects/addProject")
-    }
+  // *************** to get all projects *****************
+  const getAllProject = ()=>{
+    setIsLoding(true)
+    axios.get(`${baseUrl}/Project/manager` , 
+    {
+      headers: requstHeaders ,
+    })
+    .then((response)=>{
+      setProjectList(response?.data?.data)
+    }).catch((error)=>{
+      toast.error(error?.response?.data?.message || "Something went Wrong");
+    })
+    .finally(()=> {
+      setIsLoding(false);
+    })
+  }
+  //**************** for navigate to add new project ****************** 
+  const addNewProject = ()=> {
+    navigate("/dashboard/projects/addProject")
+  }
 
-    useEffect( ()=> {
-      getCategoryList()
-    } , [])
+  useEffect( ()=> {
+    getAllProject()
+  } , [])
 
 
   return (
     <>
+
+
+    {/* ************* this model to delete Category *********** */}
+      <Modal show={modelState == "delete-model"} onHide={handleClose}>
+        <Modal.Body>
+            <div className="text-center noData mt-3">
+              <img className='w-50' src= {noData} alt="" />
+              <h5 className='mt-3'>Delete This Category ?</h5>
+              <p>are you sure you want to delete this item ? if you are sure just <br/> click on delete it</p>
+
+              <div className='text-end mt-5'>
+                <button onClick={deleteProject} className='btn text-end border border-danger text-danger'>
+                  {isLoding == true ? <i className="fa-solid fa-spinner fa-spin"></i> : "Delete this item"}
+                </button>
+              </div>
+            </div>
+        </Modal.Body>
+      </Modal>
+
+    {/* ************* this model to update Category *********** */}
+      <Modal show={modelState == "update-model"} onHide={handleClose}>
+        <Modal.Body>
+
+          <div className='headerModel'>
+              <h3 className='ms-3 mt-3 text-center fw-bold'>Update project</h3>
+          </div>
+          
+          <form className='form w-100 m-auto mt-5' onSubmit={handleSubmit(updateProject)}>
+
+            {/* ************** for title input ************ */}
+                <div className='form-group mt-4'>
+                  <label>Title</label>
+                  <input className='form-control rounded-3 py-2 mt-2'
+                          placeholder= 'Name' 
+                          type="text" 
+                          {...register("title" , {
+                          required: true,
+                      })}
+                  />
+
+                  {errors.title && errors.title.type === "required" && (
+                    <span className='text-danger mt-4'>title is required</span>
+                  )}
+
+                </div>
+
+            {/* ************** for description input ************ */}
+                <div className='form-group mt-4 '>
+                  <label>Description</label>
+                  <input className='form-control rounded-3 pb-5 mt-2'
+                        placeholder= 'Description' 
+                        type="text" 
+                        {...register("description" , {
+                        required: true,
+                    })}
+                  />
+
+                  {errors.description && errors.description.type === "required" && (
+                      <span className='text-danger mt-4'>description is required</span>
+                  )}
+                </div>
+
+                <div className='form-group mt-3 text-center'>
+                  <button className='shredBtn w-75 mt-4 fs-4'>  
+                    {isLoding == true ? <i className="fa-solid fa-spinner fa-spin"></i> : "Update"}
+                  </button>
+                </div>
+          </form>
+
+        </Modal.Body>
+      </Modal>
       
       {/* **************** to content above table ****************** */}
       <div className='bg-white header d-flex justify-content-between px-4 py-3 '>
@@ -62,9 +198,7 @@ export default function Projects() {
           <tr className="">
             <th className="theadTable" scope="col">#</th>
             <th className="theadTable">Title</th>
-            <th className="theadTable" scope="col">Statues</th>
-            <th className="theadTable" scope="col">Num Users</th>
-            <th className="theadTable" scope="col">Num Tasks</th>
+            <th className="theadTable" scope="col">Description</th>
             <th className="theadTable" scope="col">Date Created</th>
             <th className='theadTable text-center ' scope="col text-end">Actions</th>
           </tr>
@@ -76,13 +210,11 @@ export default function Projects() {
               <tr key={project?.id}>
                 <td scope="row"> {index + 1} </td>
                 <td> {project?.title} </td>
-                <td className=""> <div className="status w-50 text-center rounded-5"> <span>Public</span> </div></td>
-                <td> 10 </td>
-                <td> 10 </td>
-                <td> 20/12/2023 </td>            
+                <td> {project?.description} </td>       
+                <td> {project?.creationDate.slice( 0 , 10)} </td>            
                 <td className='text-center'>
-                  <i className='fa fs-6 text-success fa-edit'></i>
-                  <i className='fa ms-3 fs-6 text-danger fa-trash'></i>
+                  <i onClick={()=> showUpdateModel (project)} className='fa fs-6 text-success fa-edit'></i>
+                  <i onClick={()=> showDeleteModel(project?.id)} className='fa ms-3 fs-6 text-danger fa-trash'></i>
                 </td>
               </tr>
             </>
