@@ -208,6 +208,11 @@
     font-size: 13px;
 }
 
+.actionBtn{
+    border: none;
+    background-color: transparent;
+}
+
 .loading i {
     font-size: 60px;
     padding: 100px 0;

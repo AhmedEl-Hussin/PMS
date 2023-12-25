@@ -115,8 +115,10 @@ export default function Tasks() {
   })
   .then((response)=>{
     setTasksList(response?.data?.data)
+
   }).catch((error)=>{
     toast.error(error?.response?.data?.message || "Something went Wrong");
+
   })
   .finally(()=> {
     setIsLoding(false);
@@ -272,9 +274,15 @@ export default function Tasks() {
                 <td> {task?.project?.title} </td>
                 <td> {task?.creationDate.slice( 0 , 10)} </td>           
                 <td className='text-center'>
-                  <i onClick={()=> showUpdateModel (task)} className='fa fs-6 text-success fa-edit'></i>
-                  <i onClick={()=> showDeleteModel(task?.id)} className='fa ms-3 fs-6 text-danger fa-trash'></i>
+                  <button className="actionBtn" onClick={()=> showUpdateModel (task)}>
+                    <i className='fa fs-6 text-success fa-edit'></i>
+                  </button>
+
+                  <button className="actionBtn" onClick={()=> showDeleteModel(task?.id)}>
+                    <i className='fa ms-3 fs-6 text-danger fa-trash'></i>
+                  </button>
                 </td>
+
               </tr>
             </>
           ))}

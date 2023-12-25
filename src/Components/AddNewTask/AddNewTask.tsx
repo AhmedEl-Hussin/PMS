@@ -32,12 +32,10 @@ export default function AddNewTask() {
             headers : requstHeaders,
         })
         .then((response)=> {
-            console.log(response);
             navigate("/dashboard/tasks")
             toast.success( response?.data?.message || "Added Successfully")
         })
         .catch((error)=> {
-            console.log(error.response);
             toast.error(error?.response?.data?.message || "Data of task invaild")
         })
         .finally(()=> {
@@ -53,11 +51,9 @@ export default function AddNewTask() {
             headers: requstHeaders ,
         })
         .then((response)=>{
-            // console.log(response?.data?.data);
             setProjectList(response?.data.data)
         
         }).catch((error)=>{
-            // error(error?.response?.data?.message || "Not Found Categorys")
             toast.error(error?.response?.data?.message || "Something went Wrong");
         })
         .finally(()=> {
@@ -73,7 +69,6 @@ export default function AddNewTask() {
             headers: requstHeaders ,
         })
         .then((response)=>{
-            // console.log(response.data.data);
             setUsersList(response?.data.data)
 
         }).catch((error)=>{

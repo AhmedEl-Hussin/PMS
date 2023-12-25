@@ -50,14 +50,13 @@ export default function Projects() {
       headers : requstHeaders
     })
     .then((response)=>{
-      // console.log(response);
       handleClose()
       getAllProject()
       toast.success("Project Deleted Successfuly")
     
     }).catch((error)=>{
-      // console.log(error.response.data.message);
       toast.error(error?.response?.data?.message || "Project Not Deleted");
+
     })
     .finally(()=> {
       setIsLoding(false);
@@ -67,6 +66,7 @@ export default function Projects() {
   // *************** to update project *****************
   const updateProject = (data)=> {
     setIsLoding(true);
+
     axios.put(`${baseUrl}/Project/${itemId}`, data , 
     {
       headers : requstHeaders
@@ -78,6 +78,7 @@ export default function Projects() {
     
     }).catch((error)=>{
       toast.error(error?.response?.data?.message || "'Project Not Updated'")
+
     })    
     .finally(()=> {
       setIsLoding(false);
@@ -87,14 +88,17 @@ export default function Projects() {
   // *************** to get all projects *****************
   const getAllProject = ()=>{
     setIsLoding(true)
+
     axios.get(`${baseUrl}/Project/manager` , 
     {
       headers: requstHeaders ,
     })
     .then((response)=>{
       setProjectList(response?.data?.data)
+
     }).catch((error)=>{
       toast.error(error?.response?.data?.message || "Something went Wrong");
+
     })
     .finally(()=> {
       setIsLoding(false);
@@ -213,8 +217,13 @@ export default function Projects() {
                 <td> {project?.description} </td>       
                 <td> {project?.creationDate.slice( 0 , 10)} </td>            
                 <td className='text-center'>
-                  <i onClick={()=> showUpdateModel (project)} className='fa fs-6 text-success fa-edit'></i>
-                  <i onClick={()=> showDeleteModel(project?.id)} className='fa ms-3 fs-6 text-danger fa-trash'></i>
+                  <button className="actionBtn" onClick={()=> showUpdateModel(project)}>
+                    <i className='fa fs-6 text-success fa-edit'></i>
+                  </button>
+
+                  <button className="actionBtn" onClick={()=> showDeleteModel(project?.id)}>
+                    <i className='fa ms-3 fs-6 text-danger fa-trash'></i>
+                  </button>
                 </td>
               </tr>
             </>
