@@ -13,6 +13,7 @@
     overflow: hidden;
 }
 
+
 .bgOutlet{
     background-color: rgb(245, 245, 245);
 }
@@ -28,7 +29,7 @@
 .imageLogo{
     width: 200px;
     margin: auto;
-    margin-top: 125px;
+    /* margin-top: 125px; */
 }
 
 .form h2{
@@ -54,10 +55,11 @@
     border-radius: 0px;
     width: 100%;
     outline: none;
+    color: white;
 }
 
 .Auth-container .inputs::placeholder{
-    color: white;
+    color: rgb(159, 159, 159);
 }
 
 
@@ -206,10 +208,24 @@
     font-size: 13px;
 }
 
+.actionBtn{
+    border: none;
+    background-color: transparent;
+}
+
 .loading i {
     font-size: 60px;
     padding: 100px 0;
 }
+
+.block , .unBlockBtn{
+    font-size: 12px;
+    padding: 1px 5px;
+    color: white;
+    border: none;
+    border-radius: 7px;
+}
+
 
 
 
