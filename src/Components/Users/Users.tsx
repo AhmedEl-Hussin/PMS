@@ -66,7 +66,7 @@ export default function Users() {
   // *************** to get all users *****************
   const getAllUsers = ()=>{
     setIsLoding(true)
-    axios.get(`${baseUrl}/Users/?pageSize=10&pageNumber=1` , 
+    axios.get(`${baseUrl}/Users/` , 
     {
       headers: requstHeaders ,
     })
