@@ -20,6 +20,7 @@ import { AuthContext } from './Context/AuthContext'
 import { useContext } from 'react'
 import AddNewProject from './Components/AddNewProject/AddNewProject'
 import AddNewTask from './Components/AddNewTask/AddNewTask'
+import EmployeeTasks from './Components/employeeTasks/employeeTasks'
 
 function App() { 
 
@@ -40,6 +41,7 @@ function App() {
         { path : "users", element: <Users/> },
         { path : "tasks", element: <Tasks/> },
         { path : "tasks/addTask", element: <AddNewTask/> },
+        { path : "tasks/EmployeeTasks", element: <EmployeeTasks/> },
       ]
 
     },
@@ -56,6 +58,9 @@ function App() {
         { path : "changePassword", element: <ChangePassword/> },
         { path : "verify", element: <VerfiyUser/> },
       ]
+    },
+    {
+      path : "/notFound", element: <NotFound/> ,
     }
   ])
 

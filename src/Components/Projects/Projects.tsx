@@ -23,7 +23,7 @@ export default function Projects() {
   const [projectList , setProjectList] = useState([]);
   const [isLoding , setIsLoding] =useState(false);
   const [itemId , setItemId] = useState(0);
-  // const [user , setUser] = useState(0);
+  const [arrayOfPages, setArrayOfPages] = useState([]);
   const [modelState, setModelState] = useState("colse");
   const handleClose = () => setModelState("colse");
     
@@ -87,7 +87,7 @@ export default function Projects() {
   }
 
   // *************** to get all projects *****************
-  const getAllProject = (user)=>{
+  const getAllProject = (user,pageNo)=>{
     setIsLoding(true)
     if (userRole=='Manager') {
       user='manager'
@@ -98,9 +98,18 @@ export default function Projects() {
     axios.get(`${baseUrl}/Project/${user}` , 
     {
       headers: requstHeaders ,
+      params: {
+        pageSize: 5,
+        pageNumber: pageNo,
+      },
     })
     .then((response)=>{
       setProjectList(response?.data?.data)
+      setArrayOfPages(
+        Array(response?.data?.totalNumberOfPages).fill().map((_, i) => (i + 1))
+      );
+    
+      
 
     }).catch((error)=>{
       toast.error(error?.response?.data?.message || "Something went Wrong");
@@ -204,7 +213,7 @@ export default function Projects() {
       {/* **************** to display table ****************** */}
      
       {!isLoding ? <div className='table-responsive px-4'>
-        {projectList.length > 0 ? <table className="table table-striped mt-4">
+        {projectList.length > 0 ? <> <table className="table table-striped mt-4">
         
         <thead className=''>
           <tr className="">
@@ -241,7 +250,20 @@ export default function Projects() {
             </>
           ))}
         </tbody> 
-      </table>  : <NoData/>}
+      </table>
+       <nav aria-label="...">
+       <ul className="pagination pagination-sm d-flex justify-content-center">
+         {arrayOfPages.map((pageNo) => (
+           <>
+             <li onClick={()=>{getAllProject(userRole,pageNo)}}  className="page-item  p-2 element-with-pointer pe-auto">
+               <a className="page-link"  >
+                 {pageNo}
+               </a>
+             </li>
+           </>
+         ))}
+       </ul>
+     </nav></>  : <NoData/>}
 
       </div> : <div className='text-center loading mb-5 mt-4 '> <i className="fa-solid text-success fa-spin fa-spinner"></i> </div>}
       
