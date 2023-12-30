@@ -30,12 +30,15 @@
 
 .one1{
     background-color: rgb(204, 207, 238);
+    color: #0088FE;
 }
 .one2{
     background-color:rgb(219, 219, 153);
+    color:#b72e89;
 }
 .one3{
     background-color:rgb(230, 197, 213);
+    color: #956c14;
 }
 .bord{
     border-top:solid 3px rgba(245, 245, 245, 1);
@@ -299,4 +302,13 @@
     .navCaption .navEmail{
         font-size: 8px;
     }
+}
+.iconColor1{
+    color: #0088FE;
+}
+.iconColor2{
+    color: #0088FE;
+}
+.iconColor3{
+    color: #0088FE;
 }

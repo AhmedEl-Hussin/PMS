@@ -1,54 +1,79 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState} from "react";
 import { ResponsiveBar } from '@nivo/bar'
 import axios from "axios";
-import { AuthContext } from "../../Context/AuthContext";
 
-import { ResponsiveStream } from '@nivo/stream'
-export default function Bar() {
+
+
+import { PieChart, Pie, Cell } from "recharts";
+import { AuthContext } from "../../../Context/AuthContext";
+
+export default function Pie1() {
+
   const { baseUrl, requstHeaders }: any = useContext(AuthContext);
-  const [contTasks, setContTasks] = useState([]);
-  const [contUsers, setcontUsers] = useState([]);
-  const getContTasks = () => {
+  const [tasksCount, setTasksCount] = useState({});
+ 
+  
+  const getTasksCount = () => {
     axios
       .get(`${baseUrl}/Task/count`, {
         headers: requstHeaders,
       })
       .then((response) => {
-        console.log(response);
-        setContTasks(response?.data);
+     
+        setTasksCount(response?.data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  const getContUsers = () => {
-    axios
-      .get(`${baseUrl}/Users/count`, {
-        headers: requstHeaders,
-      })
-      .then((response) => {
-        console.log(response);
-        setcontUsers(response?.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+
+ 
   useEffect(() => {
-    getContTasks();
-    getContUsers();
+    getTasksCount();
+    
   }, []);
-  const data = [
-    {  Month: 1,toDo: 5, inProgress: 6,done:10 },
-    {  Month: 2, toDo: 7, inProgress: 2,done:15 },
-    { Month: 3, toDo: 3, inProgress: 5,done:14 },
-    { Month: 4, toDo: 4, inProgress: 3,done:9 },
+//   const {toDo,inprogress,done} = 
+//     tasksCount
+//   ;
+
+const data = [
+    { name: "ToDo", value: tasksCount.toDo },
+    { name: "inProgress", value: tasksCount.inProgress},
+    { name: "Done", value: tasksCount.done},
+   
   ];
+
+ 
+   
+  
+  const COLORS = ["#0088FE", "#b72e89", "#956c14", ];
   return (
     <>
       <div className="chart">
-      <ResponsiveBar
+
+      <PieChart width={250} height={400}>
+      <Pie
+        data={data}
+        cx={120}
+        cy={100}
+        innerRadius={60}
+        outerRadius={80}
+        fill="#8884d8"
+        paddingAngle={5}
+        dataKey="value"
+      >
+        {data.map((entry, index) => (
+          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+        ))}
+      </Pie>
+   
+    </PieChart>
+   
+  
+
+
+      {/* <ResponsiveBar
         data={data}
         keys={[
             'toDo',
@@ -57,7 +82,7 @@ export default function Bar() {
            
         ]}
         
-        indexBy="Month"
+        indexBy="status"
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
         padding={0.3}
         valueScale={{ type: 'linear' }}
@@ -112,7 +137,7 @@ export default function Bar() {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'Month',
+            legend: 'Status',
             legendPosition: 'middle',
             legendOffset: 32,
             truncateTickAt: 0
@@ -273,115 +298,9 @@ export default function Bar() {
               "tableCellValue": {}
           }
       }}
-    />
-  <ResponsiveStream
-        data={data}
-        keys={[
-            'toDo',
-            'inProgress',
-            'done',
-            
-        ]}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-        axisTop={null}
-        axisRight={null}
-        axisBottom={{
-            orient: 'bottom',
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: '',
-            legendOffset: 36
-        }}
-        axisLeft={{
-            orient: 'left',
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: '',
-            legendOffset: -40
-        }}
-        enableGridX={true}
-        enableGridY={false}
-        offsetType="silhouette"
-        colors={{ scheme: 'nivo' }}
-        fillOpacity={0.85}
-        borderColor={{ theme: 'background' }}
-        defs={[
-            {
-                id: 'dots',
-                type: 'patternDots',
-                background: 'inherit',
-                color: '#2c998f',
-                size: 4,
-                padding: 2,
-                stagger: true
-            },
-            {
-                id: 'squares',
-                type: 'patternSquares',
-                background: 'inherit',
-                color: '#e4c912',
-                size: 6,
-                padding: 2,
-                stagger: true
-            }
-        ]}
-        fill={[
-            {
-                match: {
-                    id: 'Paul'
-                },
-                id: 'dots'
-            },
-            {
-                match: {
-                    id: 'Marcel'
-                },
-                id: 'squares'
-            }
-        ]}
-        dotSize={8}
-        dotColor={{ from: 'color' }}
-        dotBorderWidth={2}
-        dotBorderColor={{
-            from: 'color',
-            modifiers: [
-                [
-                    'darker',
-                    0.7
-                ]
-            ]
-        }}
-        legends={[
-            {
-                anchor: 'bottom-right',
-                direction: 'column',
-                translateX: 100,
-                itemWidth: 80,
-                itemHeight: 20,
-                itemTextColor: '#999999',
-                symbolSize: 12,
-                symbolShape: 'circle',
-                effects: [
-                    {
-                        on: 'hover',
-                        style: {
-                            itemTextColor: '#000000'
-                        }
-                    }
-                ]
-            }
-        ]}
-    />
-
-
-
-
-
-
-    
+    /> */}
       </div>
+    
     </>
   );
 }
