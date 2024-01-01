@@ -40,6 +40,15 @@
     background-color:rgb(230, 197, 213);
     color: #956c14;
 }
+.bgicons1{
+    color: #0088FE;
+}
+.bgicons2{
+    color:#b72e89;
+}
+.bgicons3{
+    color: #956c14;
+}
 .bord{
     border-top:solid 3px rgba(245, 245, 245, 1);
 }

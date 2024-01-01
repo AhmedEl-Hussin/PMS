@@ -3,8 +3,9 @@ import axios from "axios";
 
 
 
-import { PieChart, Pie, Cell } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { AuthContext } from "../../../Context/AuthContext";
+import { Tooltip } from "react-bootstrap";
 
 export default function Pie2() {
 
@@ -49,9 +50,11 @@ const data = [
     <>
       <div className="chart">
 
+   <ResponsiveContainer width={250} height={200}>
    
-      <PieChart width={250} height={400}>
-      <Pie
+   <PieChart >
+   
+   <Pie
         data={data}
         cx={120}
         cy={100}
@@ -61,14 +64,27 @@ const data = [
         paddingAngle={5}
         dataKey="value"
       >
-        {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+        {data.map((data, item) => (
+          <Cell key={data.name} fill={COLORS[item % COLORS.length]} />
         ))}
       </Pie>
+ 
+  
    
     </PieChart>
-  
 
+
+   </ResponsiveContainer>
+   
+<div className="row">
+    <div className="col-md-6">
+        <span><i className="fa-solid fa-circle bgicons1 pe-2 "></i></span><span>Activated</span>
+    </div>
+    <div className="col-md-6">
+        <span><i className="fa-solid fa-circle bgicons2   pe-2 "></i></span><span>Deactivated </span>
+    </div>
+   
+</div>
 
  
       </div>

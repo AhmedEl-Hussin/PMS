@@ -52,7 +52,7 @@ const data = [
     <>
       <div className="chart">
 
-      <PieChart width={250} height={400}>
+      <PieChart width={250} height={200}>
       <Pie
         data={data}
         cx={120}
@@ -63,14 +63,24 @@ const data = [
         paddingAngle={5}
         dataKey="value"
       >
-        {data.map((entry, index) => (
+        {data.map((data, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>
    
     </PieChart>
    
-  
+    <div className="row">
+    <div className="col-md-4">
+        <span><i className="fa-solid fa-circle bgicons1 pe-2 "></i></span><span>ToDo</span>
+    </div>
+    <div className="col-md-4">
+        <span><i className="fa-solid fa-circle bgicons2  pe-2 "></i></span><span>InProgress</span>
+    </div>
+    <div className="col-md-4">
+        <span><i className="fa-solid fa-circle bgicons3 pe-2  "></i></span><span>Done</span>
+    </div>
+</div>
 
 
       {/* <ResponsiveBar

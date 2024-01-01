@@ -98,7 +98,7 @@ export default function Home() {
             <div className="row ps-3">
               <div className="col-md-6 px-2  one rounded-3 ">
                 <div className="borderLeft m-4 w-75 px-2  ">
-                  <h5>Tasks</h5>
+                  <h5>Users</h5>
                   <p className="mt-2">
                     Lorem ipsum dolor sit amet,consecteture
                   </p>
@@ -107,14 +107,14 @@ export default function Home() {
                   <div className="col-md-5 text-center rounded-3 pt-3 one1   ">
                     <i className="fa-solid fa-clipboard-list fs-1  "></i>
                     <p>
-                      Tasks <br /> ActivatedEmployeeCount
+                      Users <br /> ActivatedEmployeeCount
                     </p>
                     <p>{usersCount.activatedEmployeeCount}</p>
                   </div>
                   <div className="col-md-6  text-center rounded-3  pt-3 one2  ">
                     <i className="fa-solid fa-chart-column fs-1 "></i>
                     <p>
-                      Tasks <br />
+                      Users <br />
                       DeactivatedEmployeeCount
                     </p>
                     <p>{usersCount.deactivatedEmployeeCount}</p>
@@ -123,7 +123,7 @@ export default function Home() {
               </div>
               <div className="col-md-5 ">
                 <div className=" ">
-                  <p className="fs-2">Tasks</p>
+                  <p className="fs-2">Users</p>
                   <Pie2 />
                 </div>
               </div>
