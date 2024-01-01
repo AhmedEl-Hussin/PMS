@@ -7,6 +7,7 @@ import axios from "axios";
 import NoData from "../../Shared/NoData/NoData";
 import noData from "../../assets/images/noData.png"
 import { useForm } from "react-hook-form";
+import EmployeeTasks from "../employeeTasks/employeeTasks";
 
 
 
@@ -20,12 +21,13 @@ export default function Tasks() {
   } = useForm();
 
   const navigate = useNavigate();
-  const {baseUrl , requstHeaders} : any = useContext(AuthContext);
+  const {baseUrl , requstHeaders , userRole} : any = useContext(AuthContext);
   const [tasksList , setTasksList] = useState([]);
   const [isLoding , setIsLoding] =useState(false);
   const [itemId , setItemId] = useState(0);
   const [modelState, setModelState] = useState("colse");
   const [usersList , setUsersList] = useState([]);
+  const [arrayOfPages, setArrayOfPages] = useState([]);
   const handleClose = () => setModelState("colse");
 
   
@@ -47,22 +49,24 @@ export default function Tasks() {
   // *************** to update task *****************
   const updateTask = (data)=> {
     setIsLoding(true);
-
-    axios.put(`${baseUrl}/Task/${itemId}`, data , 
-    {
-      headers : requstHeaders
-    })
-    .then((response)=>{
-      handleClose()
-      getAllTasks()
-      toast.success("Task Updated Successfuly")
+    if (userRole=='Manager'){
+      axios.put(`${baseUrl}/Task/${itemId}`, data , 
+      {
+        headers : requstHeaders
+      })
+      .then((response)=>{
+        handleClose()
+        getAllTasks(userRole)
+        toast.success("Task Updated Successfuly")
+      
+      }).catch((error)=>{
+        toast.error(error?.response?.data?.message || "'Task Not Updated'")
+      })    
+      .finally(()=> {
+        setIsLoding(false);
+      })
+    }
     
-    }).catch((error)=>{
-      toast.error(error?.response?.data?.message || "'Task Not Updated'")
-    })    
-    .finally(()=> {
-      setIsLoding(false);
-    })
   }
 
   //*************** to delete Task *****************
@@ -75,7 +79,7 @@ export default function Tasks() {
     })
     .then((response)=>{
       handleClose()
-      getAllTasks()
+      getAllTasks(userRole)
       toast.success("Task Deleted Successfuly")
     
     }).catch((error)=>{
@@ -88,33 +92,48 @@ export default function Tasks() {
 
   // *************** to get all users *****************
   const getAllUsers = ()=>{
-
-    axios.get(`${baseUrl}/Users/?pageSize=100&pageNumber=1` , 
-    {
-        headers: requstHeaders ,
-    })
-    .then((response)=>{
-        setUsersList(response?.data?.data)
-
-    }).catch((error)=>{
-        toast.error(error?.response?.data?.message || "Something went Wrong");
-
-    })
-    .finally(()=> {
-        setIsLoding(false);
-    })
+    if (userRole=='Manager'){
+      axios.get(`${baseUrl}/Users/` , 
+      {
+          headers: requstHeaders ,
+      })
+      .then((response)=>{
+          setUsersList(response?.data?.data)
+  
+      }).catch((error)=>{
+          toast.error(error?.response?.data?.message || "Something went Wrong");
+  
+      })
+      .finally(()=> {
+          setIsLoding(false);
+      })
+    }
+  
   }
 
   // *************** to get all tasks *****************
-  const getAllTasks = ()=>{
+  const getAllTasks = (user,pageNo:number)=>{
   setIsLoding(true)
-
-  axios.get(`${baseUrl}/Task/manager?pageSize=10&pageNumber=1` , 
+  if (userRole=='Manager') {
+    user='/manager'
+    
+  } else {
+    user=''
+  }
+  axios.get(`${baseUrl}/Task${user}` , 
   {
     headers: requstHeaders ,
+     params: {
+            pageSize: 5,
+            pageNumber: pageNo,
+          },
   })
   .then((response)=>{
+    console.log(response);
     setTasksList(response?.data?.data)
+    setArrayOfPages(
+      Array(response?.data?.totalNumberOfPages).fill().map((_, i) => (i + 1))
+    );
 
   }).catch((error)=>{
     toast.error(error?.response?.data?.message || "Something went Wrong");
@@ -150,7 +169,7 @@ export default function Tasks() {
   }
 
   useEffect( ()=> {
-    getAllTasks()
+    getAllTasks(userRole)
     getAllUsers()
   } , [])
   
@@ -240,16 +259,16 @@ export default function Tasks() {
 
         </Modal.Body>
       </Modal>
-
-      {/* **************** to content above table ****************** */}
-      <div className='bg-white header d-flex justify-content-between px-4 py-3 '>
+{userRole=='Manager'?<div>
+    {/* **************** to content above table ****************** */}
+    <div className='bg-white header d-flex justify-content-between px-4 py-3 '>
             <h3> Tasks </h3>
             <button onClick={addNewTask} className="shredBtn" > <i className="fa fa-plus"></i> Add New Task </button>
       </div>
 
       {/* **************** to display table ****************** */}
       {!isLoding ? <div className='table-responsive px-4'>
-        {tasksList.length > 0 ? <table className="table table-striped mt-4">
+        {tasksList.length > 0 ? <><table className="table table-striped mt-4">
         
         <thead className=''>
           <tr className=""> 
@@ -287,10 +306,26 @@ export default function Tasks() {
             </>
           ))}
         </tbody> 
-      </table>  : <NoData/>}
+      </table>
+      <nav aria-label="...">
+            <ul className="pagination pagination-sm d-flex justify-content-center">
+              {arrayOfPages.map((pageNo) => (
+                <>
+                  <li onClick={()=>{getAllTasks(userRole,pageNo)}}  className="page-item  p-2 element-with-pointer pe-auto">
+                    <a className="page-link"  >
+                      {pageNo}
+                    </a>
+                  </li>
+                </>
+              ))}
+            </ul>
+          </nav></>
+        : <NoData/>}
 
       </div> : <div className='text-center loading mb-5 mt-4 '> <i className="fa-solid text-success fa-spin fa-spinner"></i> </div>}
       
+ </div>:<EmployeeTasks/>}
+    
     </>
   )
 }

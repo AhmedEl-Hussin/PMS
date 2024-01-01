@@ -6,13 +6,15 @@ import NoData from "../../Shared/NoData/NoData";
 import { toast } from "react-toastify";
 import { Modal } from "react-bootstrap";
 import avatar from "../../assets/images/avatar.png"
+import { useNavigate } from "react-router-dom";
 
 
 
 export default function Users() {
 
-  const {baseUrl , requstHeaders} : any = useContext(AuthContext);
+  const {baseUrl , requstHeaders , userRole} : any = useContext(AuthContext);
   const [usersList , setUsersList] = useState([]);
+  const navigate = useNavigate();
   const [isLoding , setIsLoding] =useState(false);
   const [userId , setUserId] = useState(0);
   const [modelState, setModelState] = useState("colse");
@@ -66,7 +68,7 @@ export default function Users() {
   // *************** to get all users *****************
   const getAllUsers = ()=>{
     setIsLoding(true)
-    axios.get(`${baseUrl}/Users/?pageSize=10&pageNumber=1` , 
+    axios.get(`${baseUrl}/Users/` , 
     {
       headers: requstHeaders ,
     })
@@ -83,7 +85,12 @@ export default function Users() {
 
 
   useEffect( ()=> {
-    getAllUsers()
+    if (userRole=='Manager') {
+      getAllUsers()
+    } else {
+      navigate("/notFound")
+    }
+    
   } , [])
   
 

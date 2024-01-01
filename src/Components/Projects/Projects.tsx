@@ -19,13 +19,14 @@ export default function Projects() {
   } = useForm();
 
   const navigate = useNavigate();
-  const {baseUrl , requstHeaders} : any = useContext(AuthContext);
+  const {baseUrl , requstHeaders, userRole} : any = useContext(AuthContext);
   const [projectList , setProjectList] = useState([]);
   const [isLoding , setIsLoding] =useState(false);
   const [itemId , setItemId] = useState(0);
+  const [arrayOfPages, setArrayOfPages] = useState([]);
   const [modelState, setModelState] = useState("colse");
   const handleClose = () => setModelState("colse");
-
+    
 
   // *************** to show delete model ***************
   const showDeleteModel = (id)=>{
@@ -86,15 +87,29 @@ export default function Projects() {
   }
 
   // *************** to get all projects *****************
-  const getAllProject = ()=>{
+  const getAllProject = (user,pageNo)=>{
     setIsLoding(true)
-
-    axios.get(`${baseUrl}/Project/manager` , 
+    if (userRole=='Manager') {
+      user='manager'
+      
+    } else {
+      user='employee'
+    }
+    axios.get(`${baseUrl}/Project/${user}` , 
     {
       headers: requstHeaders ,
+      params: {
+        pageSize: 5,
+        pageNumber: pageNo,
+      },
     })
     .then((response)=>{
       setProjectList(response?.data?.data)
+      setArrayOfPages(
+        Array(response?.data?.totalNumberOfPages).fill().map((_, i) => (i + 1))
+      );
+    
+      
 
     }).catch((error)=>{
       toast.error(error?.response?.data?.message || "Something went Wrong");
@@ -110,7 +125,7 @@ export default function Projects() {
   }
 
   useEffect( ()=> {
-    getAllProject()
+    getAllProject(userRole)
   } , [])
 
 
@@ -191,12 +206,14 @@ export default function Projects() {
       {/* **************** to content above table ****************** */}
       <div className='bg-white header d-flex justify-content-between px-4 py-3 '>
           <h3> Projects </h3>
-          <button onClick={addNewProject} className="shredBtn" > <i className="fa fa-plus"></i> Add New Project </button>
+          {userRole=='Manager'?<button onClick={addNewProject} className="shredBtn" > <i className="fa fa-plus"></i> Add New Project </button>:""}
+          
       </div>
 
       {/* **************** to display table ****************** */}
+     
       {!isLoding ? <div className='table-responsive px-4'>
-        {projectList.length > 0 ? <table className="table table-striped mt-4">
+        {projectList.length > 0 ? <> <table className="table table-striped mt-4">
         
         <thead className=''>
           <tr className="">
@@ -204,7 +221,8 @@ export default function Projects() {
             <th className="theadTable">Title</th>
             <th className="theadTable" scope="col">Description</th>
             <th className="theadTable" scope="col">Date Created</th>
-            <th className='theadTable text-center ' scope="col text-end">Actions</th>
+            {userRole=='Manager'?<th className='theadTable text-center ' scope="col text-end">Actions</th>:""}
+            
           </tr>
         </thead>
       
@@ -217,6 +235,7 @@ export default function Projects() {
                 <td> {project?.description} </td>       
                 <td> {project?.creationDate.slice( 0 , 10)} </td>            
                 <td className='text-center'>
+                  {userRole=='Manager'?<div>
                   <button className="actionBtn" onClick={()=> showUpdateModel(project)}>
                     <i className='fa fs-6 text-success fa-edit'></i>
                   </button>
@@ -224,14 +243,31 @@ export default function Projects() {
                   <button className="actionBtn" onClick={()=> showDeleteModel(project?.id)}>
                     <i className='fa ms-3 fs-6 text-danger fa-trash'></i>
                   </button>
+                  </div>:""}
+                  
                 </td>
               </tr>
             </>
           ))}
         </tbody> 
-      </table>  : <NoData/>}
+      </table>
+       <nav aria-label="...">
+       <ul className="pagination pagination-sm d-flex justify-content-center">
+         {arrayOfPages.map((pageNo) => (
+           <>
+             <li onClick={()=>{getAllProject(userRole,pageNo)}}  className="page-item  p-2 element-with-pointer pe-auto">
+               <a className="page-link"  >
+                 {pageNo}
+               </a>
+             </li>
+           </>
+         ))}
+       </ul>
+     </nav></>  : <NoData/>}
 
       </div> : <div className='text-center loading mb-5 mt-4 '> <i className="fa-solid text-success fa-spin fa-spinner"></i> </div>}
+      
+      
       
 
     </>

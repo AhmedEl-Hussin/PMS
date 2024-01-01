@@ -23,6 +23,7 @@ import AddNewTask from './Components/AddNewTask/AddNewTask'
 import Bar from './Components/Charts/Bar'
 import Pie1 from './Components/Charts/Pie1/Pie1'
 import Pie2 from './Components/Charts/Pie2/Pie2'
+import EmployeeTasks from './Components/employeeTasks/employeeTasks'
 
 function App() { 
 
@@ -43,8 +44,6 @@ function App() {
         { path : "users", element: <Users/> },
         { path : "tasks", element: <Tasks/> },
         { path : "tasks/addTask", element: <AddNewTask/> },
-        { path : "pie1", element: <Pie1/> },
-        { path : "pie2", element: <Pie2/> },
       ]
 
     },
@@ -61,6 +60,9 @@ function App() {
         { path : "changePassword", element: <ChangePassword/> },
         { path : "verify", element: <VerfiyUser/> },
       ]
+    },
+    {
+      path : "/notFound", element: <NotFound/> ,
     }
   ])
 
