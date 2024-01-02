@@ -76,7 +76,6 @@ const data = [
   return (
     <>
       <div className="chart">
-
       <PieChart width={250} height={220}>
       <Pie
       dataKey="value"

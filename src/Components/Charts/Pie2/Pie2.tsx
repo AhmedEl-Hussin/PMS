@@ -5,7 +5,7 @@ import axios from "axios";
 
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { AuthContext } from "../../../Context/AuthContext";
-import { Tooltip } from "react-bootstrap";
+
 
 export default function Pie2() {
 

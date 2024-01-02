@@ -65,7 +65,7 @@ export default function ChangePassword() {
 
               <form className='form w-75 m-auto mt-4' onSubmit={handleSubmit(onSubmit)}>
                 <p className="text-white">welcome to PMS</p>
-                <h2>Change Password</h2>
+                <h2>Change Password.</h2>
 
 
             {/* ************************* for input old password ***************************** */}

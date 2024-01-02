@@ -6,7 +6,7 @@ export default function MasterLayout({adminData}) {
   return (
     <>
 
-      <NavBar adminData = {adminData} />
+      <NavBar adminData ={adminData} />
 
       <div className='d-flex'>
 

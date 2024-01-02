@@ -10,31 +10,32 @@ export default function AuthContextProvider(props){
     const baseUrl = `http://upskilling-egypt.com:3003/api/v1`;
 
     const requstHeaders = { 
-        Authorization : `Bearer ${localStorage.getItem("userToken")}`,
+        Authorization : `Bearer ${localStorage.getItem("adminToken")}`,
     }
     
     // ******************* to decoded token *******************
-    const [adminData , setAdminData] = useState(()=> localStorage.getItem("userToken"));
+    const [adminData , setAdminData] = useState(()=> localStorage.getItem("adminToken "));
     const [userRole , setUserRole] = useState(null)
 
     const saveAdminData = ()=> {
-        const encodedToken = localStorage.getItem("userToken");
+        const encodedToken = localStorage.getItem("adminToken ");
         try{
             const decodedToken = jwtDecode(encodedToken);
-            setUserRole(decodedToken.userGroup);            
-            setAdminData(decodedToken)
+                      
+            setAdminData(decodedToken);
+            setUserRole(decodedToken.userGroup); 
         }catch (error){
             setAdminData(null)
         }
     }
     
     useEffect( ()=> {
-        if (localStorage.getItem("userToken")) {
+        if (localStorage.getItem("adminToken ")) {
             saveAdminData()
         }
     } , [])
 
-    return (  <AuthContext.Provider value= {{adminData , requstHeaders , userRole, saveAdminData  , baseUrl }} > 
+    return (  <AuthContext.Provider value= {{adminData , requstHeaders , userRole, saveAdminData, baseUrl }} > 
                 {props.children} 
             </AuthContext.Provider>)
 

@@ -21,10 +21,10 @@ export default function NavBar({adminData}) {
           <img className='navbarImg' src={navImg} alt="" />
         </div>
 
-        <div className='navCaption'>
+        {/* <div className='navCaption'>
           <span className='ms-2 fw-bold'> {adminData.userName} </span> <br />
           <span className='navEmail ms-2'> {adminData.userEmail} </span>
-        </div>
+        </div> */}
 
       </div>
 

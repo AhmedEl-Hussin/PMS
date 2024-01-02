@@ -5,10 +5,10 @@ import Pie2 from "../Charts/Pie2/Pie2";
 import Pie1 from "../Charts/Pie1/Pie1";
 
 export default function Home() {
-  const { baseUrl, requstHeaders }: any = useContext(AuthContext);
+  const { baseUrl, requstHeaders, userRole }: any = useContext(AuthContext);
   const [tasksCount, setTasksCount] = useState([]);
   const [usersCount, setUsersCount] = useState([]);
-  const { userRole }: any = useContext(AuthContext);
+ 
 
   const getTasksCount = () => {
     axios
