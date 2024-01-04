@@ -19,6 +19,7 @@ export default function Users() {
   const [userId , setUserId] = useState(0);
   const [modelState, setModelState] = useState("colse");
   const [userDetails , setUserDetails] = useState({});
+  const [arrayOfPages, setArrayOfPages] = useState([]);
   const handleClose = () => setModelState("colse");
 
 
@@ -66,14 +67,21 @@ export default function Users() {
   }
 
   // *************** to get all users *****************
-  const getAllUsers = ()=>{
+  const getAllUsers = (pageNo)=>{
     setIsLoding(true)
     axios.get(`${baseUrl}/Users/` , 
     {
       headers: requstHeaders ,
+      params: {
+        pageSize: 10,
+        pageNumber: pageNo,
+      },
     })
     .then((response)=>{
       setUsersList(response?.data?.data)
+      setArrayOfPages(
+        Array(response?.data?.totalNumberOfPages).fill().map((_, i) => (i + 1))
+      );
 
     }).catch((error)=>{
       toast.error(error?.response?.data?.message || "Something went Wrong");
@@ -129,7 +137,7 @@ export default function Users() {
 
       {/* **************** to display table ****************** */}
       {!isLoding ? <div className='table-responsive px-4'>
-        {usersList.length > 0 ? <table className="table table-striped mt-4">
+        {usersList.length > 0 ? <><table className="table table-striped mt-4">
         
         <thead className=''>
           <tr className="">
@@ -173,7 +181,20 @@ export default function Users() {
             </>
           ))}
         </tbody> 
-      </table>  : <NoData/>}
+      </table>
+      <nav aria-label="...">
+      <ul className="pagination pagination-sm d-flex justify-content-center">
+        {arrayOfPages.map((pageNo) => (
+          <>
+            <li onClick={()=>{getAllUsers(pageNo)}}  className="page-item  p-2 element-with-pointer pe-auto">
+              <a className="page-link"  >
+                {pageNo}
+              </a>
+            </li>
+          </>
+        ))}
+      </ul>
+    </nav> </> : <NoData/>}
 
       </div> : <div className='text-center loading mb-5 mt-4 '> <i className="fa-solid text-success fa-spin fa-spinner"></i> </div>}
       

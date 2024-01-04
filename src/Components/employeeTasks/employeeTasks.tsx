@@ -2,54 +2,33 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../Context/AuthContext";
-import { DndProvider, useDrag, useDrop } from "react-dnd";
+import { DndProvider} from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import ToDo from "../ToDo/ToDo";
+import Inprogress from "../Inprogress/Inprogress";
+import Done from "../Done/Done";
 interface Task {
   id: string;
   title: string;
   status: string;
 }
-export default function EmployeeTasks(task) {
+export default function EmployeeTasks(task:Task) {
   const { baseUrl, requstHeaders, userRole }: any = useContext(AuthContext);
   const [isLoding, setIsLoding] = useState(false);
-  const [tasksList, setTasksList] = useState<Task[]>([]);
-  const todoTasks = tasksList.filter((task) => task?.status === "ToDo");
-  const inProgressTasks = tasksList.filter(
-    (task) => task?.status === "In Progress"
-  );
-  const doneTasks = tasksList.filter((task) => task?.status === "Done");
-
-  //***********drag task********* */
-  const [{ isDragging }, dragRef] = useDrag({
-    type: "TASK",
-    item: { id: task.id, title: task.title, status: task.status },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
+  const [allTasks, setAllTasks] = useState({
+    todo:[],
+    inprogress:[],
+    done:[]
   });
-
-  //***********drop task********* */
-
-  const [{ isOver }, dropRef] = useDrop({
-    accept: 'TASK',
-    drop: (status: any, item: Task) => {
-      setTasksList((prevTasks: Task[]) => {
-        const index = prevTasks.findIndex((t) => t.id === item.id);
-        if (index !== -1) {
-          prevTasks[index].status = status; // Update task status
-        }
-        return prevTasks; // Return the modified array
-      });
-    },
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-    }),
-  });
-
- //***********get employee tasks********* */
+  
+  
+ 
+ //***********get all employee tasks********* */
   const getAllTasks = () => {
     setIsLoding(true);
-    axios
+    if (userRole!=="Manager") {
+      
+      axios
       .get(`${baseUrl}/Task`, {
         headers: requstHeaders,
         params: {
@@ -58,7 +37,13 @@ export default function EmployeeTasks(task) {
         },
       })
       .then((response) => {
-        setTasksList(response?.data?.data);
+      
+        setAllTasks({
+          todo:response?.data?.data.filter((task) => task?.status === "ToDo"),
+          inprogress:response?.data?.data.filter((task) => task?.status === "InProgress"),
+          done:response?.data?.data.filter((task) => task?.status === "Done"),
+
+        });
       })
 
       .catch((error) => {
@@ -67,6 +52,8 @@ export default function EmployeeTasks(task) {
       .finally(() => {
         setIsLoding(false);
       });
+    }
+   
   };
   useEffect(() => {
     getAllTasks();
@@ -74,7 +61,7 @@ export default function EmployeeTasks(task) {
 
   return (
     <>
-      <DndProvider backend={HTML5Backend}>
+     
         {isLoding ? (
           <div className="text-center loading mb-5 mt-4 ">
             <i className="fa-solid text-success fa-spin fa-spinner"></i>{" "}
@@ -85,55 +72,22 @@ export default function EmployeeTasks(task) {
             <div className=" row px-2">
               <div className="col-md-4 px-1">
                 <h5 className="p-4 text-muted">To Do</h5>
-                <div
-                  className="tasksContainer p-2 ${isOver ? 'drop-target' : ''}"
-                  ref={dropRef}
-                >
-                  <ul className="list-unstyled">
-                    {todoTasks.map((task) => (
-                      <li className="taskLi p-2 m-2 rounded-2" ref={dragRef}>
-                        {task?.title}{" "}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <ToDo allTasks={allTasks?.todo} getAllTasks={getAllTasks}/>
               </div>
 
               <div className="col-md-4 px-1">
                 <h5 className="p-4 text-muted">In progress</h5>
-                <div
-                  className="tasksContainer p-2 ${isOver ? 'drop-target' : ''}"
-                  ref={dropRef}
-                >
-                  <ul className="list-unstyled">
-                    {inProgressTasks.map((task) => (
-                      <li className="taskLi p-2 m-2 rounded-2" ref={dragRef}>
-                        {task?.title}{" "}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <Inprogress allTasks={allTasks?.inprogress} getAllTasks={getAllTasks}/>
               </div>
 
               <div className="col-md-4 px-1">
                 <h5 className="p-4 text-muted">Done</h5>
-                <div
-                  className="tasksContainer p-2 ${isOver ? 'drop-target' : ''}"
-                  ref={dropRef}
-                >
-                  <ul className="list-unstyled">
-                    {doneTasks.map((task) => (
-                      <li className="taskLi p-2 m-2 rounded-2" ref={dragRef}>
-                        {task?.title}{" "}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <Done allTasks={allTasks?.done} getAllTasks={getAllTasks}/>
               </div>
             </div>
           </div>
         )}
-      </DndProvider>
+     
     </>
   );
 }

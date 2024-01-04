@@ -21,6 +21,9 @@ import { useContext } from 'react'
 import AddNewProject from './Components/AddNewProject/AddNewProject'
 import AddNewTask from './Components/AddNewTask/AddNewTask'
 import EmployeeTasks from './Components/employeeTasks/employeeTasks'
+import ToDo from './Components/ToDo/ToDo'
+import Inprogress from './Components/Inprogress/Inprogress'
+import Done from './Components/Done/Done'
 
 function App() { 
 
@@ -42,6 +45,9 @@ function App() {
         { path : "tasks", element: <Tasks/> },
         { path : "tasks/addTask", element: <AddNewTask/> },
         { path : "tasks/EmployeeTasks", element: <EmployeeTasks/> },
+        { path : "tasks/todo", element: <ToDo/> },
+        { path : "tasks/inprogress", element: <Inprogress/> },
+        { path : "tasks/done", element: <Done/> },
       ]
 
     },
