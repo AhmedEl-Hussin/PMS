@@ -1,6 +1,6 @@
 import logo from "../../assets/images/PMS 3.png"
 import { useForm } from "react-hook-form";
-import {  useNavigate } from "react-router-dom";
+import {  Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import axios from "axios";
@@ -50,8 +50,13 @@ export default function ChangePassword() {
   return (
     
     <>
+     
       <div className= {`${styles.AuthContainer} Auth-container `}>
+      <Link to="/dashboard"  className=' ms-5 text-white '> 
+                   <span><i className="fa-solid fa-arrow-left"></i></span> back
+                  </Link>
         <div className='imageLogo'>
+       
           <img className='w-100' src= {logo} alt="" />
         </div>
         <div className="mt-3 d-flex justify-content-center align-items-center">
@@ -60,7 +65,7 @@ export default function ChangePassword() {
 
               <form className='form w-75 m-auto mt-4' onSubmit={handleSubmit(onSubmit)}>
                 <p className="text-white">welcome to PMS</p>
-                <h2>Log in</h2>
+                <h2>Change Password</h2>
 
 
             {/* ************************* for input old password ***************************** */}
