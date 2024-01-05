@@ -488,7 +488,7 @@ export default function Tasks() {
                         <>
                           <li
                             onClick={() => {
-                              getAllTasks(userRole, pageNo);
+                              getAllTasks( pageNo);
                             }}
                             className="page-item  p-2 element-with-pointer pe-auto"
                           >
