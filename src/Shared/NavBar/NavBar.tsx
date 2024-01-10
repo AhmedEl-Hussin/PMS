@@ -1,11 +1,13 @@
 
 import navImg from "../../assets/images/navbarImg.png"
 import navLogo from "../../assets/images/navLogo.png"
-
+import React, {useState} from "react";
+import DarkModeToggle from "react-dark-mode-toggle";
 
 
 
 export default function NavBar({adminData}) {
+  const [isDarkMode, setIsDarkMode] = useState(() => false);
   // console.log(adminData);
 
   return (
@@ -16,6 +18,13 @@ export default function NavBar({adminData}) {
         <img className='navlogo' src={navLogo} alt="" />
       </div>
 
+<div>
+<DarkModeToggle
+      onChange={setIsDarkMode}
+      checked={isDarkMode}
+      size={80}
+    />
+</div>
       <div className=" w-25 d-flex ">
         <div className='navbarImg '>
           <img className='navbarImg' src={navImg} alt="" />
