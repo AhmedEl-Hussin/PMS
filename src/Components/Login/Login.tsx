@@ -97,9 +97,11 @@ export default function Login({saveAdminData}) {
 
                 </div>
                 <div className="d-flex justify-content-between">
-                <div className="register mt-3 text-end">
-                  <Link to="/rigester">Register Now ?</Link>
+              
+                <div className='rigester mt-3 text-end'>
+                  <Link to = "/rigester">Register Now ?</Link>
                 </div>
+                  
                 <div className='rigester mt-3 text-end'>
                   <Link to = "/requsetRestPass">Forget Password</Link>
                 </div>
