@@ -1,22 +1,26 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { AuthContext } from '../../Context/AuthContext';
 import { toast } from 'react-toastify';
 import axios from "axios";
+import TaskCard from "../TaskCard/TaskCard";
 
 
 
-export default function Done({task,allTasks,getAllTasks}) {
+export default function Done({allTasks,getAllTasks}) {
 
     const { baseUrl, requstHeaders, userRole }: any = useContext(AuthContext);
+    const[task,setTask]=useState(null)
+
   // ***********drag task********* */
-  const [{ isDragging }, dragRef] = useDrag({
-    type: "TASK",
-    item: { id: task?.id, status: task?.status },
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  });
+
+  // const [{ isDragging }, dragRef] = useDrag({
+  //   type: "TASK",
+  //   item: { id: task?.id, status: task?.status },
+  //   collect: (monitor) => ({
+  //     isDragging: !!monitor.isDragging(),
+  //   }),
+  // });
   // console.log(isDragging);
 
   //***********drop task********* */
@@ -24,8 +28,8 @@ export default function Done({task,allTasks,getAllTasks}) {
   const [{ isOver, canDrop }, dropRef] = useDrop(() => ({
     accept: "TASK",
     drop: (status: any) => {
-        dropTask(task?.id, task?.status);
-    },
+      dropTask(task?.id, task?.status);
+        },
 
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
@@ -33,26 +37,26 @@ export default function Done({task,allTasks,getAllTasks}) {
     }),
   }));
 const dropTask=(id:number,status:string)=>{
-    if (status==="Done") {
-        return null
-    }
+  if (status==="Done") {
+  return null
+  }
     else{ axios.put(`${baseUrl}/Task/${id}/change-status`,{
-       status: "Done"
-    },
-     {
+  status: "Done"
+  },
+  {
         headers: requstHeaders,
         
-      })
-      .then((res)=>{
-        console.log(res);
+  })
+  .then((res)=>{
+  console.log(res);
         
-        toast.success("status changed")
-      })
-      .catch((err)=>{
-    console.log(err);
-    toast.error("error in chsnging status")
+  toast.success("status changed")
+  })
+  .catch((err)=>{
+  console.log(err);
+  toast.error("error in chsnging status")
     
-      })
+  })
   }}
 
 
@@ -61,10 +65,11 @@ const dropTask=(id:number,status:string)=>{
     <>
       <div className="tasksContainer p-2 " ref={dropRef}>
         <ul className="list-unstyled">
-          {allTasks?.map(({ title, id, status }) => (
-            <li ref={dragRef} className="taskLi p-2 m-2 rounded-2">
-              {title}
-            </li>
+          {allTasks?.map((task) => (
+             <TaskCard task={task}/>
+            // <li ref={dragRef} className="taskLi p-2 m-2 rounded-2">
+            //   {title}
+            // </li>
           ))}
         </ul>
       </div>

@@ -2,8 +2,6 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../Context/AuthContext";
-import { DndProvider} from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import ToDo from "../ToDo/ToDo";
 import Inprogress from "../Inprogress/Inprogress";
 import Done from "../Done/Done";
@@ -29,7 +27,8 @@ export default function EmployeeTasks(task:Task) {
     if (userRole!=="Manager") {
       
       axios
-      .get(`${baseUrl}/Task`, {
+      .get(`${baseUrl}/Task`, 
+      {
         headers: requstHeaders,
         params: {
           pageSize: 100,
@@ -72,17 +71,17 @@ export default function EmployeeTasks(task:Task) {
             <div className=" row px-2">
               <div className="col-md-4 px-1">
                 <h5 className="p-4 text-muted">To Do</h5>
-                <ToDo allTasks={allTasks?.todo} getAllTasks={getAllTasks}/>
+                <ToDo allTasks={allTasks?.todo} getAllTasks={getAllTasks}  />
               </div>
 
               <div className="col-md-4 px-1">
                 <h5 className="p-4 text-muted">In progress</h5>
-                <Inprogress allTasks={allTasks?.inprogress} getAllTasks={getAllTasks}/>
+                <Inprogress allTasks={allTasks?.inprogress} getAllTasks={getAllTasks} />
               </div>
 
               <div className="col-md-4 px-1">
                 <h5 className="p-4 text-muted">Done</h5>
-                <Done allTasks={allTasks?.done} getAllTasks={getAllTasks}/>
+                <Done allTasks={allTasks?.done} getAllTasks={getAllTasks} />
               </div>
             </div>
           </div>

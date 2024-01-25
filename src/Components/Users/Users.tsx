@@ -114,7 +114,7 @@ export default function Users() {
 
           <div className="w-50 text-center m-auto mt-4">
             {userDetails?.imagePath ?
-              <img className="w-75" src={`http://upskilling-egypt.com:3003/`+userDetails.imagePath} alt="" />
+              <img className="w-75" src={`https://upskilling-egypt.com:3003/`+userDetails.imagePath} alt="" />
               : <img className="w-75" src={avatar} alt="" />        
             }
           </div>

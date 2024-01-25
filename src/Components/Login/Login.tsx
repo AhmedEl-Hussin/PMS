@@ -26,7 +26,7 @@ export default function Login({saveAdminData}) {
     axios.post(`${baseUrl}/Users/Login` , data)
 
     .then((response)=> {
-      localStorage.setItem('userToken', response.data.token);
+      localStorage.setItem('userToken', response?.data?.token);
       saveAdminData()
       navigate("/dashboard")
       toast.success(response?.data?.message ||"Successfully")
