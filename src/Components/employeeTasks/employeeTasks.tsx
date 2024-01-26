@@ -23,7 +23,7 @@ export default function EmployeeTasks(task:Task) {
  
  //***********get all employee tasks********* */
   const getAllTasks = () => {
-    setIsLoding(true);
+    // setIsLoding(true);
     if (userRole!=="Manager") {
       
       axios
@@ -48,9 +48,9 @@ export default function EmployeeTasks(task:Task) {
       .catch((error) => {
         toast.error(error?.response?.data?.message || "Something went Wrong");
       })
-      .finally(() => {
-        setIsLoding(false);
-      });
+      // .finally(() => {
+      //   setIsLoding(false);
+      // });
     }
    
   };
@@ -71,17 +71,17 @@ export default function EmployeeTasks(task:Task) {
             <div className=" row px-2">
               <div className="col-md-4 px-1">
                 <h5 className="p-4 text-muted">To Do</h5>
-                <ToDo allTasks={allTasks?.todo} getAllTasks={getAllTasks}  />
+                <ToDo allTasks={allTasks?.todo}  />
               </div>
 
               <div className="col-md-4 px-1">
                 <h5 className="p-4 text-muted">In progress</h5>
-                <Inprogress allTasks={allTasks?.inprogress} getAllTasks={getAllTasks} />
+                <Inprogress allTasks={allTasks?.inprogress} />
               </div>
 
               <div className="col-md-4 px-1">
                 <h5 className="p-4 text-muted">Done</h5>
-                <Done allTasks={allTasks?.done} getAllTasks={getAllTasks} />
+                <Done allTasks={allTasks?.done}  />
               </div>
             </div>
           </div>

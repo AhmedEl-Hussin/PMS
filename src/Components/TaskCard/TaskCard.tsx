@@ -12,7 +12,6 @@ export default function TaskCard({task}) {
         }),
         
       });
-      console.log(task?.id);
 
     return (
         <>

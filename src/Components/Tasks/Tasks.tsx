@@ -47,7 +47,7 @@ export default function Tasks() {
 
   // *************** to update task *****************
   const updateTask = (data) => {
-    setIsLoding(true);
+    // setIsLoding(true);
     if (userRole == "Manager") {
       axios
         .put(`${baseUrl}/Task/${itemId}`, data, {
@@ -61,15 +61,15 @@ export default function Tasks() {
         .catch((error) => {
           toast.error(error?.response?.data?.message || "'Task Not Updated'");
         })
-        .finally(() => {
-          setIsLoding(false);
-        });
+        // .finally(() => {
+        //   setIsLoding(false);
+        // });
     }
   };
 
   //*************** to delete Task *****************
   const deleteTask = () => {
-    setIsLoding(true);
+    // setIsLoding(true);
 
     axios
       .delete(`${baseUrl}/Task/${itemId}`, {
@@ -83,9 +83,9 @@ export default function Tasks() {
       .catch((error) => {
         toast.error(error?.response?.data?.message || "Task Not Deleted");
       })
-      .finally(() => {
-        setIsLoding(false);
-      });
+      // .finally(() => {
+      //   setIsLoding(false);
+      // });
   };
 
       // *************** to get all users *****************
@@ -103,9 +103,9 @@ export default function Tasks() {
         .catch((error) => {
           toast.error(error?.response?.data?.message || "Something went Wrong");
         })
-        .finally(() => {
-          setIsLoding(false);
-        });
+        // .finally(() => {
+        //   setIsLoding(false);
+        // });
     }
   };
 
@@ -118,7 +118,7 @@ export default function Tasks() {
 
 
   const getAllTasks = ( pageNo: number) => {
-    setIsLoding(true);
+    // setIsLoding(true);
     if (userRole === "Manager") {
       axios
       .get(`${baseUrl}/Task/manager`, {
@@ -139,9 +139,9 @@ export default function Tasks() {
       .catch((error) => {
         toast.error(error?.response?.data?.message || "Something went Wrong");
       })
-      .finally(() => {
-        setIsLoding(false);
-      });
+      // .finally(() => {
+      //   setIsLoding(false);
+      // });
     }
     
   };
@@ -204,9 +204,9 @@ export default function Tasks() {
       .catch((error) => {
         toast.error(error?.response?.data?.message || "Something went Wrong");
       })
-      .finally(() => {
-        setIsLoding(false);
-      });
+      // .finally(() => {
+      //   setIsLoding(false);
+      // });
     } 
    
   };
@@ -226,7 +226,7 @@ export default function Tasks() {
 
 
   const getProjectValue=(selected,pageNo )=>{
-    setIsLoding(true);
+    // setIsLoding(true);
     let id =  selected.target.value
    
     axios
@@ -250,9 +250,9 @@ export default function Tasks() {
     .catch((error) => {
       toast.error(error?.response?.data?.message || "Something went Wrong");
     })
-    .finally(() => {
-      setIsLoding(false);
-    });
+    // .finally(() => {
+    //   setIsLoding(false);
+    // });
     
   }
 
@@ -420,10 +420,10 @@ export default function Tasks() {
 
 
 
-          {!isLoding ? (
+          
             <div className="table-responsive px-4">
-              {tasksList.length > 0 ? (
-                <>
+             
+               
                   <table className="table table-striped mt-4">
                     <thead className="">
                       <tr className="">
@@ -498,17 +498,9 @@ export default function Tasks() {
                       ))}
                     </ul>
                   </nav>
-                </>
-              ) : (
-                <NoData />
-              )}
+               
             </div>
-          ) : (
-            <div className="text-center loading mb-5 mt-4 ">
-              {" "}
-              <i className="fa-solid text-success fa-spin fa-spinner"></i>{" "}
-            </div>
-          )}
+          
         </div>
       ) : (
         <EmployeeTasks />

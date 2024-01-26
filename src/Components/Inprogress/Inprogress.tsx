@@ -6,36 +6,26 @@ import axios from 'axios';
 import TaskCard from '../TaskCard/TaskCard';
 
 
-export default function Inprogress({allTasks,getAllTasks}) {
+export default function Inprogress({allTasks}) {
 
     const { baseUrl, requstHeaders, userRole }: any = useContext(AuthContext);
     const[task,setTask]=useState(null)
 
-     //***********drag task********* */
-
-  // const [{ isDragging }, dragRef] = useDrag({
-  //   type: "TASK",
-  //   item: { id: task?.id,status: task?.status },
-  //   collect: (monitor) => ({
-  //     isDragging: !!monitor.isDragging(),
     
-  //   }),
-  // });
-  
  
 
-  const [{ isOver , canDrop }, dropRef] = useDrop(()=>({
+  const [{ isOver,canDrop }, dropRef] = useDrop(()=>({
     accept: 'TASK',
-    drop: (status: any) => {
-        dropTask(task?.id,task?.status)
+    drop: ({id,status}:any) => {
+    dropTask(id,status);
+      
       },
    
-       collect: (monitor) => ({
+    collect: (monitor) => ({
       isOver: !!monitor.isOver(),
       canDrop: !!monitor.canDrop(),
-       }),
+    }),
   }))
-
   const dropTask=(id:number,status:string)=>{
     if (status==="InProgress") {
   return null

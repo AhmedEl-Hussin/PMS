@@ -7,35 +7,26 @@ import TaskCard from "../TaskCard/TaskCard";
 
 
 
-export default function Done({allTasks,getAllTasks}) {
+export default function Done({allTasks}) {
 
     const { baseUrl, requstHeaders, userRole }: any = useContext(AuthContext);
     const[task,setTask]=useState(null)
 
-  // ***********drag task********* */
-
-  // const [{ isDragging }, dragRef] = useDrag({
-  //   type: "TASK",
-  //   item: { id: task?.id, status: task?.status },
-  //   collect: (monitor) => ({
-  //     isDragging: !!monitor.isDragging(),
-  //   }),
-  // });
-  // console.log(isDragging);
-
+ 
   //***********drop task********* */
 
-  const [{ isOver, canDrop }, dropRef] = useDrop(() => ({
-    accept: "TASK",
-    drop: (status: any) => {
-      dropTask(task?.id, task?.status);
-        },
-
+  const [{ isOver,canDrop }, dropRef] = useDrop(()=>({
+    accept: 'TASK',
+    drop: ({id,status}:any) => {
+    dropTask(id,status);
+      
+      },
+   
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
       canDrop: !!monitor.canDrop(),
     }),
-  }));
+  }))
 const dropTask=(id:number,status:string)=>{
   if (status==="Done") {
   return null
