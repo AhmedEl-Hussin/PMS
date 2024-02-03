@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useDrag, useDrop } from "react-dnd";
+import  { useContext } from "react";
+import { useDrop } from "react-dnd";
 import { AuthContext } from '../../Context/AuthContext';
-import { toast } from 'react-toastify';
 import axios from "axios";
 import TaskCard from "../TaskCard/TaskCard";
 
@@ -9,8 +8,7 @@ import TaskCard from "../TaskCard/TaskCard";
 
 export default function Done({allTasks}) {
 
-    const { baseUrl, requstHeaders, userRole }: any = useContext(AuthContext);
-    const[task,setTask]=useState(null)
+    const { baseUrl, requstHeaders }: any = useContext(AuthContext);
 
  
   //***********drop task********* */
@@ -38,16 +36,7 @@ const dropTask=(id:number,status:string)=>{
         headers: requstHeaders,
         
   })
-  .then((res)=>{
-  console.log(res);
-        
-  toast.success("status changed")
-  })
-  .catch((err)=>{
-  console.log(err);
-  toast.error("error in chsnging status")
-    
-  })
+ 
   }}
 
 
@@ -58,9 +47,6 @@ const dropTask=(id:number,status:string)=>{
         <ul className="list-unstyled">
           {allTasks?.map((task) => (
              <TaskCard task={task}/>
-            // <li ref={dragRef} className="taskLi p-2 m-2 rounded-2">
-            //   {title}
-            // </li>
           ))}
         </ul>
       </div>

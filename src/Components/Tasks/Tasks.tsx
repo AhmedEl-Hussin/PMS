@@ -1,10 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
-import { toast } from "react-toastify";
 import { Modal } from "react-bootstrap";
 import axios from "axios";
-import NoData from "../../Shared/NoData/NoData";
 import noData from "../../assets/images/noData.png";
 import { useForm } from "react-hook-form";
 import EmployeeTasks from "../employeeTasks/employeeTasks";
@@ -20,12 +18,12 @@ export default function Tasks() {
   const navigate = useNavigate();
   const { baseUrl, requstHeaders, userRole }: any = useContext(AuthContext);
   const [tasksList, setTasksList] = useState([]);
-  const [isLoding, setIsLoding] = useState(false);
   const [itemId, setItemId] = useState(0);
   const [projectList, setProjectList] = useState([]);
   const [modelState, setModelState] = useState("colse");
   const [usersList, setUsersList] = useState([]);
   const [arrayOfPages, setArrayOfPages] = useState([]);
+  const [isLoding, setIsLoding] = useState(false);
   
 
   const handleClose = () => setModelState("colse");
@@ -56,20 +54,18 @@ export default function Tasks() {
         .then((response) => {
           handleClose();
           getAllTasks(userRole);
-          toast.success("Task Updated Successfuly");
+          // toast.success("Task Updated Successfuly");
         })
-        .catch((error) => {
-          toast.error(error?.response?.data?.message || "'Task Not Updated'");
-        })
-        // .finally(() => {
-        //   setIsLoding(false);
-        // });
+        // .catch((error) => {
+        //   toast.error(error?.response?.data?.message || "'Task Not Updated'");
+        // })
+       
     }
   };
 
   //*************** to delete Task *****************
   const deleteTask = () => {
-    // setIsLoding(true);
+
 
     axios
       .delete(`${baseUrl}/Task/${itemId}`, {
@@ -78,14 +74,12 @@ export default function Tasks() {
       .then((response) => {
         handleClose();
         getAllTasks(userRole);
-        toast.success("Task Deleted Successfuly");
+        // toast.success("Task Deleted Successfuly");
       })
-      .catch((error) => {
-        toast.error(error?.response?.data?.message || "Task Not Deleted");
-      })
-      // .finally(() => {
-      //   setIsLoding(false);
-      // });
+      // .catch((error) => {
+      //   toast.error(error?.response?.data?.message || "Task Not Deleted");
+      // })
+     
   };
 
       // *************** to get all users *****************
@@ -100,12 +94,10 @@ export default function Tasks() {
         .then((response) => {
           setUsersList(response?.data?.data);
         })
-        .catch((error) => {
-          toast.error(error?.response?.data?.message || "Something went Wrong");
-        })
-        // .finally(() => {
-        //   setIsLoding(false);
-        // });
+        // .catch((error) => {
+        //   toast.error(error?.response?.data?.message || "Something went Wrong");
+        // })
+       
     }
   };
 
@@ -136,9 +128,9 @@ export default function Tasks() {
             .map((_, i) => i + 1)
         );
       })
-      .catch((error) => {
-        toast.error(error?.response?.data?.message || "Something went Wrong");
-      })
+      // .catch((error) => {
+      //   toast.error(error?.response?.data?.message || "Something went Wrong");
+      // })
       // .finally(() => {
       //   setIsLoding(false);
       // });
@@ -201,9 +193,9 @@ export default function Tasks() {
       .then((response) => {
         setProjectList(response?.data.data);
       })
-      .catch((error) => {
-        toast.error(error?.response?.data?.message || "Something went Wrong");
-      })
+      // .catch((error) => {
+      //   toast.error(error?.response?.data?.message || "Something went Wrong");
+      // })
       // .finally(() => {
       //   setIsLoding(false);
       // });
@@ -247,9 +239,9 @@ export default function Tasks() {
       
       setTasksList(response?.data.data);
     })
-    .catch((error) => {
-      toast.error(error?.response?.data?.message || "Something went Wrong");
-    })
+    // .catch((error) => {
+    //   toast.error(error?.response?.data?.message || "Something went Wrong");
+    // })
     // .finally(() => {
     //   setIsLoding(false);
     // });

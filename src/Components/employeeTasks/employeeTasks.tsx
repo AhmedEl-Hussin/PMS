@@ -12,7 +12,7 @@ interface Task {
 }
 export default function EmployeeTasks(task:Task) {
   const { baseUrl, requstHeaders, userRole }: any = useContext(AuthContext);
-  const [isLoding, setIsLoding] = useState(false);
+  // const [isLoding, setIsLoding] = useState(false);
   const [allTasks, setAllTasks] = useState({
     todo:[],
     inprogress:[],
@@ -45,9 +45,9 @@ export default function EmployeeTasks(task:Task) {
         });
       })
 
-      .catch((error) => {
-        toast.error(error?.response?.data?.message || "Something went Wrong");
-      })
+      // .catch((error) => {
+      //   toast.error(error?.response?.data?.message || "Something went Wrong");
+      // })
       // .finally(() => {
       //   setIsLoding(false);
       // });
@@ -61,11 +61,7 @@ export default function EmployeeTasks(task:Task) {
   return (
     <>
      
-        {isLoding ? (
-          <div className="text-center loading mb-5 mt-4 ">
-            <i className="fa-solid text-success fa-spin fa-spinner"></i>{" "}
-          </div>
-        ) : (
+        
           <div className=" employeeTasksContainer overflow-hidden px-2">
             <h4 className="text-muted bg-white m-0 p-3">Task Board</h4>
             <div className=" row px-2">
@@ -85,7 +81,7 @@ export default function EmployeeTasks(task:Task) {
               </div>
             </div>
           </div>
-        )}
+        
      
     </>
   );
