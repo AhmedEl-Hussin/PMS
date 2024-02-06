@@ -6,7 +6,7 @@ import TaskCard from "../TaskCard/TaskCard";
 
 
 
-export default function Done({allTasks}) {
+export default function Done({allTasks,getAllTasks}) {
 
     const { baseUrl, requstHeaders }: any = useContext(AuthContext);
 
@@ -35,6 +35,9 @@ const dropTask=(id:number,status:string)=>{
   {
         headers: requstHeaders,
         
+  })
+  .then((res)=>{
+    getAllTasks()
   })
  
   }}

@@ -5,7 +5,7 @@ import axios from 'axios';
 import TaskCard from '../TaskCard/TaskCard';
 
 
-export default function Inprogress({allTasks}) {
+export default function Inprogress({allTasks ,getAllTasks}) {
 
     const { baseUrl, requstHeaders }: any = useContext(AuthContext);
    
@@ -36,6 +36,9 @@ export default function Inprogress({allTasks}) {
   {
         headers: requstHeaders,
         
+  })
+  .then((res)=>{
+    getAllTasks()
   })
  
   }}

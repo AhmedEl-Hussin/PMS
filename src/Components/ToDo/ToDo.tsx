@@ -5,7 +5,7 @@ import { AuthContext } from '../../Context/AuthContext';
 import TaskCard from '../TaskCard/TaskCard';
 
 
-export default function ToDo({allTasks}) {
+export default function ToDo({allTasks ,getAllTasks}) {
     const { baseUrl, requstHeaders }: any = useContext(AuthContext);
  
 
@@ -37,6 +37,9 @@ export default function ToDo({allTasks}) {
      {
         headers: requstHeaders,
         
+      })
+      .then((res)=>{
+        getAllTasks()
       })
    
   }

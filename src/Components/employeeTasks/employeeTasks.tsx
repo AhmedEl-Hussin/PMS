@@ -67,17 +67,17 @@ export default function EmployeeTasks(task:Task) {
             <div className=" row px-2">
               <div className="col-md-4 px-1">
                 <h5 className="p-4 text-muted">To Do</h5>
-                <ToDo allTasks={allTasks?.todo}  />
+                <ToDo allTasks={allTasks?.todo} getAllTasks={getAllTasks} />
               </div>
 
               <div className="col-md-4 px-1">
                 <h5 className="p-4 text-muted">In progress</h5>
-                <Inprogress allTasks={allTasks?.inprogress} />
+                <Inprogress allTasks={allTasks?.inprogress} getAllTasks={getAllTasks} />
               </div>
 
               <div className="col-md-4 px-1">
                 <h5 className="p-4 text-muted">Done</h5>
-                <Done allTasks={allTasks?.done}  />
+                <Done allTasks={allTasks?.done}  getAllTasks={getAllTasks} />
               </div>
             </div>
           </div>
