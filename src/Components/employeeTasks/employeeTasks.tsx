@@ -2,8 +2,6 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../Context/AuthContext";
-import { DndProvider} from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import ToDo from "../ToDo/ToDo";
 import Inprogress from "../Inprogress/Inprogress";
 import Done from "../Done/Done";
@@ -14,7 +12,7 @@ interface Task {
 }
 export default function EmployeeTasks(task:Task) {
   const { baseUrl, requstHeaders, userRole }: any = useContext(AuthContext);
-  const [isLoding, setIsLoding] = useState(false);
+  // const [isLoding, setIsLoding] = useState(false);
   const [allTasks, setAllTasks] = useState({
     todo:[],
     inprogress:[],
@@ -25,11 +23,12 @@ export default function EmployeeTasks(task:Task) {
  
  //***********get all employee tasks********* */
   const getAllTasks = () => {
-    setIsLoding(true);
+    // setIsLoding(true);
     if (userRole!=="Manager") {
       
       axios
-      .get(`${baseUrl}/Task`, {
+      .get(`${baseUrl}/Task`, 
+      {
         headers: requstHeaders,
         params: {
           pageSize: 100,
@@ -46,12 +45,12 @@ export default function EmployeeTasks(task:Task) {
         });
       })
 
-      .catch((error) => {
-        toast.error(error?.response?.data?.message || "Something went Wrong");
-      })
-      .finally(() => {
-        setIsLoding(false);
-      });
+      // .catch((error) => {
+      //   toast.error(error?.response?.data?.message || "Something went Wrong");
+      // })
+      // .finally(() => {
+      //   setIsLoding(false);
+      // });
     }
    
   };
@@ -62,31 +61,27 @@ export default function EmployeeTasks(task:Task) {
   return (
     <>
      
-        {isLoding ? (
-          <div className="text-center loading mb-5 mt-4 ">
-            <i className="fa-solid text-success fa-spin fa-spinner"></i>{" "}
-          </div>
-        ) : (
+        
           <div className=" employeeTasksContainer overflow-hidden px-2">
             <h4 className="text-muted bg-white m-0 p-3">Task Board</h4>
             <div className=" row px-2">
               <div className="col-md-4 px-1">
                 <h5 className="p-4 text-muted">To Do</h5>
-                <ToDo allTasks={allTasks?.todo} getAllTasks={getAllTasks}/>
+                <ToDo allTasks={allTasks?.todo} getAllTasks={getAllTasks} />
               </div>
 
               <div className="col-md-4 px-1">
                 <h5 className="p-4 text-muted">In progress</h5>
-                <Inprogress allTasks={allTasks?.inprogress} getAllTasks={getAllTasks}/>
+                <Inprogress allTasks={allTasks?.inprogress} getAllTasks={getAllTasks} />
               </div>
 
               <div className="col-md-4 px-1">
                 <h5 className="p-4 text-muted">Done</h5>
-                <Done allTasks={allTasks?.done} getAllTasks={getAllTasks}/>
+                <Done allTasks={allTasks?.done}  getAllTasks={getAllTasks} />
               </div>
             </div>
           </div>
-        )}
+        
      
     </>
   );

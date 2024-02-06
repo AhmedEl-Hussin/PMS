@@ -1,29 +1,21 @@
 import axios from 'axios';
-import React, { useContext } from 'react'
-import  { useDrag, useDrop } from "react-dnd";
+import { useContext } from 'react'
+import  {useDrop } from "react-dnd";
 import { AuthContext } from '../../Context/AuthContext';
-import { toast } from 'react-toastify';
+import TaskCard from '../TaskCard/TaskCard';
 
 
-export default function ToDo({task,allTasks,getAllTasks}) {
-    const { baseUrl, requstHeaders, userRole }: any = useContext(AuthContext);
-     // ***********drag task********* */
-  const [{ isDragging }, dragRef] = useDrag({
-    type: "TASK",
-    item: { id: task?.id,status: task?.status },
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  });
-
-
+export default function ToDo({allTasks ,getAllTasks}) {
+    const { baseUrl, requstHeaders }: any = useContext(AuthContext);
+ 
 
    //***********drop task********* */
 
    const [{ isOver,canDrop }, dropRef] = useDrop(()=>({
     accept: 'TASK',
-    drop: (status: any) => {
-        dropTask(task?.id,task?.status)
+    drop: ({id,status}:any) => {
+    dropTask(id,status);
+      
       },
    
     collect: (monitor) => ({
@@ -31,12 +23,13 @@ export default function ToDo({task,allTasks,getAllTasks}) {
       canDrop: !!monitor.canDrop(),
     }),
   }))
-
+  
 
 
   const dropTask =(id:number,status:string)=>{
     if (status==="ToDo") {
         return null
+        
     }
     return axios.put(`${baseUrl}/Task/${id}/change-status`,{
        status: "ToDo"
@@ -46,15 +39,9 @@ export default function ToDo({task,allTasks,getAllTasks}) {
         
       })
       .then((res)=>{
-        console.log(res);
-        
-        toast.success("status changed")
+        getAllTasks()
       })
-      .catch((err)=>{
-    console.log(err);
-    toast.error("error in chsnging status")
-    
-      })
+   
   }
   
   
@@ -63,11 +50,9 @@ export default function ToDo({task,allTasks,getAllTasks}) {
          <div
                   className="tasksContainer p-2 " ref={dropRef}>
                   <ul className="list-unstyled">
-                    {allTasks?.map(({title,id,status}) => (
-                      <li ref={dragRef} className="taskLi p-2 m-2 rounded-2" >
-                        {title}
-                      </li>
-                    ))}
+                  {allTasks?.map((task) => (
+             <TaskCard task={task}/>
+          ))}
                   </ul>
                 </div>
             
