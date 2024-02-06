@@ -68,7 +68,7 @@ export default function Tasks() {
   };
 
   //*************** to delete Task *****************
-  const deleteTask = () => {
+  const deleteAds = () => {
     setIsLoding(true);
 
     axios
@@ -274,7 +274,7 @@ export default function Tasks() {
 
             <div className="text-end mt-5">
               <button
-                onClick={deleteTask}
+                onClick={deleteAds}
                 className="btn text-end border border-danger text-danger"
               >
                 {isLoding == true ? (

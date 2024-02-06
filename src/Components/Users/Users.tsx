@@ -107,7 +107,7 @@ export default function Users() {
     <>
 
 
-    {/* ************* this model to update recipe *********** */}
+    {/* ************* this model to view recipe *********** */}
       <Modal show={modelState == "view-model"} onHide={handleClose}>
         <Modal.Body>
           <h3 className='ms- mt-3 text-success fw-bold'>User Details</h3>
