@@ -24,7 +24,6 @@ export default function Tasks() {
   const [usersList, setUsersList] = useState([]);
   const [arrayOfPages, setArrayOfPages] = useState([]);
   const [isLoding, setIsLoding] = useState(false);
-  
 
   const handleClose = () => setModelState("colse");
 
@@ -55,23 +54,16 @@ export default function Tasks() {
           handleClose();
           getAllTasks(userRole);
           // toast.success("Task Updated Successfuly");
-        })
-        // .catch((error) => {
-        //   toast.error(error?.response?.data?.message || "'Task Not Updated'");
-        // })
-       
+        });
+      // .catch((error) => {
+      //   toast.error(error?.response?.data?.message || "'Task Not Updated'");
+      // })
     }
   };
 
   //*************** to delete Task *****************
-<<<<<<< HEAD
-  const deleteAds = () => {
-    setIsLoding(true);
-=======
+
   const deleteTask = () => {
-
->>>>>>> 2be03e8bef877d04b8f75badb65beff85a5e65a1
-
     axios
       .delete(`${baseUrl}/Task/${itemId}`, {
         headers: requstHeaders,
@@ -80,59 +72,50 @@ export default function Tasks() {
         handleClose();
         getAllTasks(userRole);
         // toast.success("Task Deleted Successfuly");
-      })
-      // .catch((error) => {
-      //   toast.error(error?.response?.data?.message || "Task Not Deleted");
-      // })
-     
+      });
+    // .catch((error) => {
+    //   toast.error(error?.response?.data?.message || "Task Not Deleted");
+    // })
   };
 
-      // *************** to get all users *****************
-
+  // *************** to get all users *****************
 
   const getAllUsers = () => {
     if (userRole == "Manager") {
       axios
-        .get(`${baseUrl}/Users/`, {
+        .get(`${baseUrl}/Users/?pageSize=100`, {
           headers: requstHeaders,
         })
         .then((response) => {
           setUsersList(response?.data?.data);
-        })
-        // .catch((error) => {
-        //   toast.error(error?.response?.data?.message || "Something went Wrong");
-        // })
-       
+        });
+      // .catch((error) => {
+      //   toast.error(error?.response?.data?.message || "Something went Wrong");
+      // })
     }
   };
 
+  // *************** to get all tasks *****************
 
-
-
-
-          // *************** to get all tasks *****************
-
-
-
-  const getAllTasks = ( pageNo: number) => {
+  const getAllTasks = (pageNo: number = 1) => {
     // setIsLoding(true);
-    if (userRole === "Manager") {
+    if (userRole == "Manager") {
       axios
-      .get(`${baseUrl}/Task/manager`, {
-        headers: requstHeaders,
-        params: {
-          pageSize: 5,
-          pageNumber: pageNo,
-        },
-      })
-      .then((response) => {
-        setTasksList(response?.data?.data);
-        setArrayOfPages(
-          Array(response?.data?.totalNumberOfPages)
-            .fill()
-            .map((_, i) => i + 1)
-        );
-      })
+        .get(`${baseUrl}/Task/manager`, {
+          headers: requstHeaders,
+          params: {
+            pageSize: 5,
+            pageNumber: pageNo,
+          },
+        })
+        .then((response) => {
+          setTasksList(response?.data?.data);
+          setArrayOfPages(
+            Array(response?.data?.totalNumberOfPages)
+              .fill()
+              .map((_, i) => i + 1)
+          );
+        });
       // .catch((error) => {
       //   toast.error(error?.response?.data?.message || "Something went Wrong");
       // })
@@ -140,24 +123,15 @@ export default function Tasks() {
       //   setIsLoding(false);
       // });
     }
-    
   };
 
-        //**************** for navigate to add new task ******************
-
-
-
+  //**************** for navigate to add new task ******************
 
   const addNewTask = () => {
     navigate("/dashboard/tasks/addTask");
   };
-  
 
-
-
-         //*************** to check task status (toDo / inProgress / done) ***************
-
-
+  //*************** to check task status (toDo / inProgress / done) ***************
 
   const taskStatus = (tasksList) => {
     if (tasksList.status == "ToDo") {
@@ -168,96 +142,80 @@ export default function Tasks() {
       );
     } else if (tasksList.status == "InProgress") {
       return (
-        <div className="shareColor text-white w-75 text-center rounded-5">
+        <div className="shareColor text-white w-50 text-center rounded-5 ">
           <span className="fw-bold"> in progress </span>
         </div>
       );
     } else if (tasksList.status == "Done") {
       return (
-        <div className="bg-success text-white w-50 text-center rounded-5">
+        <div className=" tasksDone text-white w-50 text-center rounded-5">
           <span className="fw-bold"> done </span>
         </div>
       );
     }
   };
 
-
-
-
-                   // *************** to get all projects *****************
-
-
-
+  // *************** to get all projects *****************
 
   const getAllProjects = () => {
     if (userRole == "Manager") {
       axios
-      .get(`${baseUrl}/Project/manager`, {
-        headers: requstHeaders,
-      })
-      .then((response) => {
-        setProjectList(response?.data.data);
-      })
+        .get(`${baseUrl}/Project/manager`, {
+          headers: requstHeaders,
+        })
+        .then((response) => {
+          setProjectList(response?.data.data);
+        });
       // .catch((error) => {
       //   toast.error(error?.response?.data?.message || "Something went Wrong");
       // })
       // .finally(() => {
       //   setIsLoding(false);
       // });
-    } 
-   
+    }
   };
 
-  useEffect(() => {
-    getAllTasks(userRole);
-    getAllUsers();
-    getAllProjects();
-  
-  }, []);0
+  //********************* to show tasks of selected project******************* */
 
-
-
-      //********************* to show tasks of selected project******************* */
-
-
-
-
-  const getProjectValue=(selected,pageNo )=>{
+  const getProjectValue = (selected, pageNo) => {
     // setIsLoding(true);
-    let id =  selected.target.value
-   
-    axios
-    .get(`${baseUrl}/Task/project/${id}`, {
-      headers: requstHeaders,
-      params: {
-        pageSize: 5,
-        pageNumber: pageNo,
-      },
+    let id = selected.target.value;
 
-    })
-    .then((response) => {
-      setArrayOfPages(
-        Array(response?.data?.totalNumberOfPages)
-          .fill()
-          .map((_, i) => i + 1)
-      );
-      
-      setTasksList(response?.data.data);
-    })
+    axios
+      .get(`${baseUrl}/Task/project/${id}`, {
+        headers: requstHeaders,
+        params: {
+          pageSize: 5,
+          pageNumber: pageNo,
+        },
+      })
+      .then((response) => {
+        setArrayOfPages(
+          Array(response?.data?.totalNumberOfPages)
+            .fill()
+            .map((_, i) => i + 1)
+        );
+
+        setTasksList(response?.data.data);
+      });
     // .catch((error) => {
     //   toast.error(error?.response?.data?.message || "Something went Wrong");
     // })
     // .finally(() => {
     //   setIsLoding(false);
     // });
-    
-  }
+  };
 
-
+  useEffect(() => {
+    if (userRole) {
+      getAllTasks();
+      getAllUsers();
+      getAllProjects();
+    }
+  }, [userRole]);
   return (
     <>
-             {/* ************* this model to delete Category *********** */}
-
+      {/* ************* this model to delete Category *********** */}
 
       <Modal show={modelState == "delete-model"} onHide={handleClose}>
         <Modal.Body>
@@ -271,7 +229,7 @@ export default function Tasks() {
 
             <div className="text-end mt-5">
               <button
-                onClick={deleteAds}
+                onClick={deleteTask}
                 className="btn text-end border border-danger text-danger"
               >
                 {isLoding == true ? (
@@ -285,9 +243,7 @@ export default function Tasks() {
         </Modal.Body>
       </Modal>
 
-              {/* ************* this model to update Category *********** */}
-
-
+      {/* ************* this model to update Category *********** */}
 
       <Modal show={modelState == "update-model"} onHide={handleClose}>
         <Modal.Body>
@@ -333,10 +289,7 @@ export default function Tasks() {
               )}
             </div>
 
-               {/* ************** to select user **************** */}
-
-
-
+            {/* ************** to select user **************** */}
 
             <div className="col-md-12">
               <div className="form-group mt-3">
@@ -373,131 +326,114 @@ export default function Tasks() {
         </Modal.Body>
       </Modal>
       {userRole == "Manager" ? (
-        <div>
-
-
-
-              {/* **************** to content above table ****************** */}
-
-
+        <div className="animate__animated animate__backInRight">
+          {/* **************** to content above table ****************** */}
 
           <div className="bg-white header d-flex justify-content-between px-4 py-3 ">
-            <h3> Tasks </h3>
+            <h3 className="text1"> Tasks </h3>
             <button onClick={addNewTask} className="shredBtn">
               {" "}
               <i className="fa fa-plus"></i> Add New Task{" "}
             </button>
           </div>
 
-          
-               {/* //**************** to filter tasks by projects   *************/}
+          {/* //**************** to filter tasks by projects   *************/}
 
-
-
-          <div className="row px-3 justify-content-center">
-            <div className=" mt-4 col-md-6">
-              <select onChange={getProjectValue}
-                className="form-select" >
-                <option  value="" className="text-muted">
+          <div className="d-flex px-3 justify-content-center  ">
+            <div className=" mt-4  bord rounded-2 ">
+              <select onChange={getProjectValue} className="form-select">
+                <option value="" className="text-warning">
                   filter tasks by project
                 </option>
 
                 {projectList.map((project, index) => (
-                  <option  key={index} value={project?.id} >
+                  <option
+                    className="text-success"
+                    key={index}
+                    value={project?.id}
+                  >
                     {project?.title}
                   </option>
                 ))}
               </select>
             </div>
-            
           </div>
 
-              {/* **************** to display table ****************** */}
+          {/* **************** to display table ****************** */}
 
+          <div className="table-responsive px-4">
+            <table className="table table-striped mt-4">
+              <thead className="">
+                <tr className="">
+                  <th className="theadTable" scope="col">
+                    #
+                  </th>
+                  <th className="theadTable">Title</th>
+                  <th className="theadTable" scope="col">
+                    Statues
+                  </th>
+                  <th className="theadTable" scope="col">
+                    User
+                  </th>
+                  <th className="theadTable" scope="col">
+                    Project
+                  </th>
+                  <th className="theadTable" scope="col">
+                    Date Created
+                  </th>
+                  <th className="theadTable text-center " scope="col text-end">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
 
-
-
-          
-            <div className="table-responsive px-4">
-             
-               
-                  <table className="table table-striped mt-4">
-                    <thead className="">
-                      <tr className="">
-                        <th className="theadTable" scope="col">
-                          #
-                        </th>
-                        <th className="theadTable">Title</th>
-                        <th className="theadTable" scope="col">
-                          Statues
-                        </th>
-                        <th className="theadTable" scope="col">
-                          User
-                        </th>
-                        <th className="theadTable" scope="col">
-                          Project
-                        </th>
-                        <th className="theadTable" scope="col">
-                          Date Created
-                        </th>
-                        <th
-                          className="theadTable text-center "
-                          scope="col text-end"
+              <tbody>
+                {tasksList.map((task, index) => (
+                  <>
+                    <tr key={task?.id}>
+                      <td scope="row"> {index + 1} </td>
+                      <td> {task?.title} </td>
+                      <td> {taskStatus(task)} </td>
+                      <td> {task?.employee?.userName} </td>
+                      <td> {task?.project?.title} </td>
+                      <td> {task?.creationDate.slice(0, 10)} </td>
+                      <td className="text-center">
+                        <button
+                          className="actionBtn"
+                          onClick={() => showUpdateModel(task)}
                         >
-                          Actions
-                        </th>
-                      </tr>
-                    </thead>
+                          <i className="fa fs-6 text-success fa-edit"></i>
+                        </button>
 
-                    <tbody>
-                      {tasksList.map((task, index) => (
-                        <>
-                          <tr key={task?.id}>
-                            <td scope="row"> {index + 1} </td>
-                            <td> {task?.title} </td>
-                            <td> {taskStatus(task)} </td>
-                            <td> {task?.employee?.userName} </td>
-                            <td> {task?.project?.title} </td>
-                            <td> {task?.creationDate.slice(0, 10)} </td>
-                            <td className="text-center">
-                              <button
-                                className="actionBtn"
-                                onClick={() => showUpdateModel(task)}
-                              >
-                                <i className="fa fs-6 text-success fa-edit"></i>
-                              </button>
-
-                              <button
-                                className="actionBtn"
-                                onClick={() => showDeleteModel(task?.id)}
-                              >
-                                <i className="fa ms-3 fs-6 text-danger fa-trash"></i>
-                              </button>
-                            </td>
-                          </tr>
-                        </>
-                      ))}
-                    </tbody>
-                  </table>
-                  <nav aria-label="...">
-                    <ul className="pagination pagination-sm d-flex justify-content-center">
-                      {arrayOfPages.map((pageNo) => (
-                        <>
-                          <li
-                            onClick={() => {
-                              getAllTasks(userRole, pageNo);
-                            }}
-                            className="page-item  p-2 element-with-pointer pe-auto"
-                          >
-                            <a className="page-link">{pageNo}</a>
-                          </li>
-                        </>
-                      ))}
-                    </ul>
-                  </nav>
-               
-            </div>
-          
+                        <button
+                          className="actionBtn"
+                          onClick={() => showDeleteModel(task?.id)}
+                        >
+                          <i className="fa ms-3 fs-6 text-danger fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </>
+                ))}
+              </tbody>
+            </table>
+            <nav aria-label="...">
+              <ul className="pagination pagination-sm d-flex justify-content-center point">
+                {arrayOfPages.map((pageNo) => (
+                  <>
+                    <li
+                      onClick={() => {
+                        getAllTasks(userRole, pageNo);
+                      }}
+                      className="page-item  p-2 element-with-pointer pe-auto"
+                    >
+                      <a className="page-link">{pageNo}</a>
+                    </li>
+                  </>
+                ))}
+              </ul>
+            </nav>
+          </div>
         </div>
       ) : (
         <EmployeeTasks />

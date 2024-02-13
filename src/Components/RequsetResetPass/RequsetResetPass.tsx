@@ -52,7 +52,7 @@ return (<>
           <div className="form-group mt-5 position-relative mt-4">
             <label htmlFor="">E-mail</label>
             <input
-              className=" py-2 text-white inputs"
+              className=" p-2 text-white inputs"
               placeholder="Enter your E-mail"
               type="email"
               {...register("email", {

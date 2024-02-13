@@ -52,7 +52,7 @@ export default function RestPassword() {
   {/* ************************* for input email ***************************** */}
                 <div className='form-group mt-2 position-relative mt-4'>
                     <label htmlFor="">E-mail</label>
-                    <input className=' py-2 text-white inputs' 
+                    <input className=' p-2 text-white inputs' 
                       placeholder= 'Enter your E-mail' 
                       type="email" 
                       {...register("email" , {
@@ -80,7 +80,7 @@ export default function RestPassword() {
                       })}
                     />
 
-                  {errors.email && errors.email.type === "required" && (
+                  {errors.seed && errors.seed.type === "required" && (
                   <span className='text-danger mt-4'>OTP is required</span>
                   )}
                 </div>
@@ -88,7 +88,7 @@ export default function RestPassword() {
   {/* ************************* for input password ************************* */}
               <div className='form-group mt-2 position-relative'>
                   <label htmlFor="">Password</label>
-                  <input className='py-2 text-white inputs' 
+                  <input className='p-2 text-white inputs' 
                     placeholder='Enter your password' 
                     type="password" 
                     {...register("password" , {
@@ -111,7 +111,7 @@ export default function RestPassword() {
   {/* ************************* for input Confirm password ************************* */}
                 <div className='form-group mt-2 position-relative'>
                   <label htmlFor="">Password</label>
-                  <input className='py-2 text-white inputs' 
+                  <input className='p-2 text-white inputs' 
                     placeholder='Confirm password' 
                     type="password" 
                     {...register("confirmPassword" , {

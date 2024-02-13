@@ -6,7 +6,7 @@
 
 .Auth-container{
     width: 100%;
-    height: 120vh;
+ height: 100vh;
     background-image: url(assets/images/bg1.png);
     background-position: center center;
     background-size: cover;
@@ -24,8 +24,15 @@
 .borderLeft{
     border-left: 5px solid   rgba(239, 155, 40, 1) ;
 }
+.border1{
+    border-bottom: 3px solid   rgba(239, 155, 40, 1) ;
+    width: 75px;
+}
 .one{
     background-color:rgb(226, 228, 231);
+}
+.two{
+    background-color: rgb(173, 208, 201);
 }
 
 .one1{
@@ -34,11 +41,12 @@
 }
 .one2{
     background-color:rgb(219, 219, 153);
-    color:#b72e89;
+    color: #956c14;
 }
 .one3{
     background-color:rgb(230, 197, 213);
-    color: #956c14;
+  
+    color:#b72e89;
 }
 .bgicons1{
     color: #0088FE;
@@ -126,19 +134,45 @@
     color: white;
 }
 
+  /* //**************** to filter tasks by projects   *************/
+  .bord{
+    border: #ef9b28 2px solid;
+  }
+
+
 /* **************** style for sidbar *************** */
+.hov{
+    background-color: rgba(242, 147, 15, 0.3);
+    max-width: 130px;
+    margin: auto;
+    border-radius: 10px;
+    color: orange;
+}
+.hov_collapsed:hover{
+    width: 50px !important;
+
+}
+.ps-menu-root.css-vj11vy{
+    position: fixed;
+    top: 57.12px;
+}
 
 .sideBar-container .ps-sidebar-container{
     background-color: #0E382F;
     color: white;
-    height: 1000px;
+    height: 1100px;
     position: relative;
+  
+}
+.ps-menuitem-root.icons.iconHover.mx-3.css-1t8x7v1{
+    width:145px ;
 }
 
 .sideBar-container .ps-sidebar-root{
-    width: 10rem;
+    width: 11rem;
     min-width: 10rem;
     border: none;
+    
 }
 
 
@@ -175,23 +209,29 @@
     font-size: 15px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    /* margin-left: 100px; */
-    position: absolute;
+    position:fixed !important;
     width: 20px;
-    top: 10px;
-    left: 60px ;
+    bottom: 3;
+    left: 80px  ;
+    cursor: pointer;
+ 
+    
+   
 }
 
+
 .sideBar-container .ps-sidebar-container .icon-tolgle-left{
-    background-color: orange;
-    padding: 10px 5px;
-    font-size: 15px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+   
+
     position: absolute;
-    width: 20px;
-    top: 10px;
-    left: 140px ;
+    top: 3;
+    left:154px;
+    padding: 10px;
+    background: #ef9b28;
+    cursor: pointer;
+    width: 22px;
+    border-top-left-radius: 5px ;
+    border-bottom-left-radius: 5px ;
 }
 
 /* **************** style for navbar *************** */
@@ -241,7 +281,7 @@
 }
 
 .theadTable , .status{
-    background-color: #466a62 !important;
+    background-color:#0e382f !important;
     color: white !important;
 }
 
@@ -265,22 +305,27 @@
     color: white;
     border: none;
     border-radius: 7px;
+    width: 60px;
+   
 }
 
+.texttr{
+    color:#e5740f!important;
+}
 
 /* **************** style for tasks *************** */
 
 
 
 .shareColor{
-    background-color: #EF9B28A3;
+    background-color: #b72e89;
 }
 .employeeTasksContainer .row {
     height: 500px;
     overflow-y: auto;
 }
 .tasksContainer{
-    background-color: #315951E5;
+   
     border-radius: 15px;
     -webkit-border-radius: 15px;
     -moz-border-radius: 15px;
@@ -289,9 +334,11 @@
     min-height: 380px;
     
 }
-.taskLi{
-    background-color: #EF9B28;
-    color: white;
+.tasksContainer1{
+    background-color: #315951E5;
+}
+.tasksDone{
+    background-color:#956c14;
 }
 
 
@@ -340,5 +387,8 @@
     color: #0088FE;
 }
 .iconColor3{
-    color: #0088FE;
+    color: #0088FE;}
+/* ********************pagination***************** */
+.point{
+cursor: pointer;
 }
