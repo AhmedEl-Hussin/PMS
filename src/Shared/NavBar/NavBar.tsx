@@ -44,7 +44,7 @@ export default function NavBar({ adminData }) {
             <div className="navCaption col-md-8">
               <span className="ms-3 fw-bold text1"> {adminData.userName} </span>{" "}
               <br />
-              <span className="navEmail  ms-3"> {adminData.userEmail}  </span>
+              <span className="navEmail  ms-3"> {adminData.userEmail} </span>
             </div>
           </div>
         </div>
