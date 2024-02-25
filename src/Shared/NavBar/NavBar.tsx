@@ -10,7 +10,7 @@ export default function NavBar({ adminData }) {
   return (
     <>
       <div
-        className=" px-3 py-1 navbarCaption d-flex justify-content-between row "
+        className=" ps-3 py-1 navbarCaption d-flex justify-content-between  "
         style={{ position: "sticky", zIndex: 100, background: "#fff", top: 0 }}
       >
         <div className="col-md-2">
@@ -35,7 +35,7 @@ export default function NavBar({ adminData }) {
             </span>
           </h3>
         </div>
-        <div className=" w-25 d-flex col-md-5 ">
+        <div className=" w-25 d-flex col-md-4 ">
           <div className="row">
             <div className="navbarImg col-md-4 ">
               <img className="navbarImg" src={navImg} alt="" />
@@ -44,7 +44,7 @@ export default function NavBar({ adminData }) {
             <div className="navCaption col-md-8">
               <span className="ms-3 fw-bold text1"> {adminData.userName} </span>{" "}
               <br />
-              <span className="navEmail  ms-3"> {adminData.userEmail} </span>
+              <span className="navEmail  ms-3"> {adminData.userEmail}  </span>
             </div>
           </div>
         </div>
